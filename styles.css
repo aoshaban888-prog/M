@@ -198,6 +198,7 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
 .action-renew { background: rgba(81,211,155,0.14); color: #caffec; border: 1px solid rgba(81,211,155,0.35); cursor: pointer; font-family: inherit; font-weight: 600; }
 .action-delete { background: rgba(255,123,123,0.14); color: #ffdada; border: 1px solid rgba(255,123,123,0.35); cursor: pointer; font-family: inherit; font-weight: 600; }
 .action-notify { background: rgba(255,200,80,0.12); color: #ffe599; border: 1px solid rgba(255,200,80,0.3); cursor: pointer; font-family: inherit; font-weight: 600; }
+.action-edit { background: rgba(100,160,255,0.12); color: #b8d4ff; border: 1px solid rgba(100,160,255,0.3); cursor: pointer; font-family: inherit; font-weight: 600; }
 .action-renew:hover { background: rgba(81,211,155,0.22); }
 .action-delete:hover { background: rgba(255,123,123,0.22); }
 .action-notify:hover { background: rgba(255,200,80,0.22); }
