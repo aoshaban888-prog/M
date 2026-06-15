@@ -289,7 +289,7 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-chipGroup.addEventListener('click', (e) => {
+chipGroup?.addEventListener('click', (e) => {
   const button = e.target.closest('button[data-filter]');
   if (!button) return;
 
@@ -297,7 +297,7 @@ chipGroup.addEventListener('click', (e) => {
   document.querySelectorAll('#filterChips .chip').forEach(chip => chip.classList.remove('active'));
   button.classList.add('active');
 
-  renderAlerts(searchBox.value, activeFilter);
+  renderAlerts(searchBox?.value, activeFilter);
 });
 
 function addAlert() {
