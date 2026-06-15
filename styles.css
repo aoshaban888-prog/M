@@ -202,6 +202,7 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
 .action-renew:hover { background: rgba(81,211,155,0.22); }
 .action-delete:hover { background: rgba(255,123,123,0.22); }
 .action-notify:hover { background: rgba(255,200,80,0.22); }
+.action-edit:hover { background: rgba(100,160,255,0.22); }
 
 /* ── Settings ── */
 .settings-section { background: var(--panel-2); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: grid; gap: 0; }
