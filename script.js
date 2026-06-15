@@ -532,64 +532,7 @@ function initManage() {
     const renewBtn = e.target.closest('[data-renew]');
     const confirmBtn = e.target.closest('[data-confirm-renew]');
     const cancelBtn = e.target.closest('[data-cancel-renew]');
-    const notifyBtn = e.target.closest('[data-notify]');
-    const confirmNotify = e.target.closest('[data-confirm-notify]');
-    const cancelNotify = e.target.closest('[data-cancel-notify]');
-    const clearNotify = e.target.closest('[data-clear-notify]');
     const deleteBtn = e.target.closest('[data-delete]');
-
-    if (notifyBtn) {
-      const i = Number(notifyBtn.dataset.notify);
-      const existing = alerts[i].notifyAt || (addDays(1) + 'T09:00');
-      const [nDate, nTime] = existing.split('T');
-      const [nYr, nMo, nDy] = nDate.split('-');
-      const [nHr, nMin] = nTime.split(':');
-      const actions = notifyBtn.closest('.manage-actions');
-      actions.innerHTML = `
-        <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-          <div style="display:flex;gap:4px;align-items:center;">
-            <input type="number" id="nDy_${i}" value="${parseInt(nDy)}" min="1" max="31" class="form-input" style="width:54px;text-align:center;" placeholder="يوم"/>
-            <span style="color:var(--muted)">/</span>
-            <input type="number" id="nMo_${i}" value="${parseInt(nMo)}" min="1" max="12" class="form-input" style="width:54px;text-align:center;" placeholder="شهر"/>
-            <span style="color:var(--muted)">/</span>
-            <input type="number" id="nYr_${i}" value="${nYr}" min="2024" max="2099" class="form-input" style="width:72px;text-align:center;" placeholder="سنة"/>
-          </div>
-          <div style="display:flex;gap:4px;align-items:center;">
-            <input type="number" id="nHr_${i}" value="${nHr}" min="0" max="23" class="form-input" style="width:54px;text-align:center;" placeholder="ساعة"/>
-            <span style="color:var(--muted)">:</span>
-            <input type="number" id="nMn_${i}" value="${nMin}" min="0" max="59" class="form-input" style="width:54px;text-align:center;" placeholder="دقيقة"/>
-          </div>
-          <button class="primary-btn" style="padding:6px 14px;" data-confirm-notify="${i}">حفظ</button>
-          <button class="ghost-btn" style="padding:6px 12px;" data-cancel-notify="${i}">إلغاء</button>
-          ${alerts[i].notifyAt ? '<button class="danger-btn" style="padding:6px 12px;" data-clear-notify="' + i + '">إزالة</button>' : ''}
-        </div>`;
-      if ('Notification' in window && Notification.permission === 'default') {
-        Notification.requestPermission();
-      }
-    }
-
-    if (confirmNotify) {
-      const i = Number(confirmNotify.dataset.confirmNotify);
-      const d = String(document.getElementById('nDy_' + i)?.value || 1).padStart(2, '0');
-      const m = String(document.getElementById('nMo_' + i)?.value || 1).padStart(2, '0');
-      const y = document.getElementById('nYr_' + i)?.value || new Date().getFullYear();
-      const h = String(document.getElementById('nHr_' + i)?.value || 9).padStart(2, '0');
-      const mn = String(document.getElementById('nMn_' + i)?.value || 0).padStart(2, '0');
-      alerts[i].notifyAt = `${y}-${m}-${d}T${h}:${mn}`;
-      alerts[i].notifyFired = false;
-      saveAlerts();
-      renderManageList();
-    }
-
-    if (cancelNotify) renderManageList();
-
-    if (clearNotify) {
-      const i = Number(clearNotify.dataset.clearNotify);
-      delete alerts[i].notifyAt;
-      delete alerts[i].notifyFired;
-      saveAlerts();
-      renderManageList();
-    }
 
     if (renewBtn) {
       const i = Number(renewBtn.dataset.renew);
