@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>التنبيهات — نظام التنبيهات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body id="page-alerts">
+<div class="app-shell">
+
+  <!-- ══ Sidebar ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <p class="eyebrow">نظام التنبيهات</p>
+      <h1>لوحة تحكم ذكية</h1>
+      <p class="muted" style="margin-top:4px;">إدارة السجلات والاشتراكات والإقامات</p>
+    </div>
+    <nav class="nav-card">
+      <a class="nav-link" href="index.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        نظرة عامة
+      </a>
+      <a class="nav-link active" href="alerts.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        التنبيهات
+        <span class="nav-badge js-urgent-badge" style="display:none">0</span>
+      </a>
+      <a class="nav-link" href="calendar.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        التقويم
+      </a>
+      <a class="nav-link" href="manage.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        لوحة الإدارة
+      </a>
+      <a class="nav-link" href="settings.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        الإعدادات
+      </a>
+    </nav>
+    <div class="mini-card">
+      <h3>ملخص سريع</h3>
+      <ul id="sidebarSummary"><li>جارٍ التحميل...</li></ul>
+    </div>
+  </aside>
+
+  <!-- ══ Content ══ -->
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">قائمة التنبيهات</p>
+        <h2>كل التنبيهات <span class="badge" id="totalCountBadge" style="font-size:1rem; vertical-align:middle">0</span></h2>
+      </div>
+      <div class="top-actions">
+        <button class="ghost-btn small-btn" id="toggleFormBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:middle"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          إضافة تنبيه
+        </button>
+        <span class="badge" id="lastSync">آخر تحديث: الآن</span>
+      </div>
+    </header>
+
+    <!-- Add Form (collapsible) -->
+    <div class="panel" id="addAlertForm" style="display:none; margin-bottom:18px;">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">إضافة عنصر جديد</p>
+          <h3>بيانات التنبيه</h3>
+        </div>
+        <button class="ghost-btn small-btn" id="closeFormBtn">إغلاق ✕</button>
+      </div>
+      <div class="manage-grid">
+        <label>الفئة
+          <select id="itemType" class="form-select">
+            <option value="records">سجل</option>
+            <option value="subscriptions">اشتراك</option>
+            <option value="residences">إقامة</option>
+          </select>
+        </label>
+        <label>العنوان
+          <input id="itemTitle" type="text" class="form-input" placeholder="مثال: سجل موظف جديد" />
+        </label>
+        <label>الوصف
+          <input id="itemDetail" type="text" class="form-input" placeholder="مثال: يحتاج تجديد خلال 3 أيام" />
+        </label>
+        <label>تاريخ التجديد
+          <input id="itemDate" type="date" class="form-input" />
+        </label>
+        <label>الأيام المتبقية
+          <input id="itemDays" type="number" min="0" value="3" class="form-input" readonly />
+          <small class="muted">تُحسب تلقائياً من التاريخ</small>
+        </label>
+        <label>الأولوية
+          <input id="itemPriority" type="text" value="سيتم حسابها تلقائيًا" class="form-input" readonly />
+          <small class="muted" id="priorityHint">تُحسب تلقائيًا</small>
+        </label>
+      </div>
+      <button class="primary-btn" id="addAlertBtn" style="margin-top:14px; width:100%">إضافة التنبيه</button>
+    </div>
+
+    <!-- Filters -->
+    <div class="panel" style="margin-bottom:18px;">
+      <div class="search-wrap" style="margin-bottom:12px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchBox" type="search" placeholder="ابحث عن سجل أو اشتراك أو إقامة..." />
+      </div>
+      <div class="chip-row" id="filterChips">
+        <button class="chip active" data-filter="all">الكل</button>
+        <button class="chip" data-filter="records">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:4px"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          سجلات
+        </button>
+        <button class="chip" data-filter="subscriptions">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:4px"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          اشتراكات
+        </button>
+        <button class="chip" data-filter="residences">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:4px"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          إقامات
+        </button>
+        <button class="chip" data-filter="urgent">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-left:4px"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          حرج فقط
+        </button>
+      </div>
+    </div>
+
+    <!-- Alert List -->
+    <div class="alert-list" id="alertList"></div>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
