@@ -99,6 +99,22 @@
             <small class="muted" style="font-size:0.82rem;" id="priorityHint">تُحسب تلقائياً من تاريخ الانتهاء</small>
           </label>
         </div>
+          <label style="grid-column: 1 / -1;"><span>وقت التنبيه <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+              <div style="display:flex;gap:4px;align-items:center;">
+                <input type="number" id="notifyDay" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم"/>
+                <span style="color:var(--muted)">/</span>
+                <input type="number" id="notifyMonth" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر"/>
+                <span style="color:var(--muted)">/</span>
+                <input type="number" id="notifyYear" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة"/>
+              </div>
+              <div style="display:flex;gap:4px;align-items:center;">
+                <input type="number" id="notifyHour" min="0" max="23" class="form-input" style="width:58px;text-align:center;" placeholder="ساعة"/>
+                <span style="color:var(--muted)">:</span>
+                <input type="number" id="notifyMinute" min="0" max="59" class="form-input" style="width:58px;text-align:center;" placeholder="دقيقة"/>
+              </div>
+            </div>
+          </label>
         <button class="primary-btn" id="addAlertBtn" style="margin-top:16px; width:100%; padding:12px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:middle"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           إضافة العنصر
