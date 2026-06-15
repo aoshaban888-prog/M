@@ -831,6 +831,9 @@ async function main() {
   else if (pageId === 'page-calendar') initCalendar();
   else if (pageId === 'page-manage') initManage();
   else if (pageId === 'page-settings') initSettings();
+
+  checkNotifications();
+  setInterval(checkNotifications, 60000);
 }
 
 main();
