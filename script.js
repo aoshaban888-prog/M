@@ -356,12 +356,12 @@ function deleteItem(index) {
 }
 
 function renderAll() {
-  renderAlerts(searchBox.value, activeFilter);
+  if (searchBox) renderAlerts(searchBox.value, activeFilter);
   renderManageList();
 }
 
-addAlertBtn.addEventListener('click', addAlert);
-resetDemoBtn.addEventListener('click', () => {
+addAlertBtn?.addEventListener('click', addAlert);
+resetDemoBtn?.addEventListener('click', () => {
   alerts = JSON.parse(JSON.stringify(defaultAlerts));
   saveAlerts();
   renderAll();
