@@ -738,13 +738,14 @@ function checkNotifications() {
   const nowAt = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}T${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
   let changed = false;
   alerts.forEach((item, i) => {
-    if (item.notifyAt && item.notifyAt === nowAt && !item.notifyFired) {
+    if (item.notifyAt && item.notifyAt <= nowAt && !item.notifyFired) {
       alerts[i].notifyFired = true;
       changed = true;
       if (appSettings.notifSound) playExpirySound();
       if ('Notification' in window && Notification.permission === 'granted') {
+        const overdue = item.notifyAt < nowAt;
         new Notification(`🔔 تنبيه: ${item.title}`, {
-          body: `${item.detail ? item.detail + ' — ' : ''}ينتهي ${formatDate(item.expiryDate)}`
+          body: `${overdue ? '(متأخر) ' : ''}${item.detail ? item.detail + ' — ' : ''}ينتهي ${formatDate(item.expiryDate)}`
         });
       }
     }
