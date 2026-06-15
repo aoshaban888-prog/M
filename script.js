@@ -483,7 +483,6 @@ function initManage() {
   const manageList = document.getElementById('manageList');
   const manageCount = document.getElementById('manageCount');
   const addAlertBtn = document.getElementById('addAlertBtn');
-  const resetDemoBtn = document.getElementById('resetDemoBtn');
   const itemType = document.getElementById('itemType');
   const itemTitle = document.getElementById('itemTitle');
   const itemDetail = document.getElementById('itemDetail');
