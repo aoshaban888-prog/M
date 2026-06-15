@@ -550,14 +550,29 @@ function initManage() {
       const i = Number(renewBtn.dataset.renew);
       const actions = renewBtn.closest('.manage-actions');
       const [yr, mo, dy] = addDays(365).split('-');
+      let exNDays = '', exNHr = '', exNMn = '';
+      if (alerts[i].notifyAt && alerts[i].expiryDate) {
+        const diff = Math.round((new Date(alerts[i].expiryDate) - new Date(alerts[i].notifyAt.split('T')[0])) / 86400000);
+        if (diff > 0) exNDays = diff;
+        const tp = alerts[i].notifyAt.split('T')[1]?.split(':');
+        exNHr = tp?.[0] || ''; exNMn = tp?.[1] || '';
+      }
       actions.innerHTML = `
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
           <div style="display:flex;gap:4px;align-items:center;">
-            <input type="number" id="renewDay_${i}" value="${parseInt(dy)}" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم" />
-            <span style="color:var(--muted);">/</span>
-            <input type="number" id="renewMonth_${i}" value="${parseInt(mo)}" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر" />
-            <span style="color:var(--muted);">/</span>
-            <input type="number" id="renewYear_${i}" value="${yr}" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة" />
+            <input type="number" id="renewDay_${i}" value="${parseInt(dy)}" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم"/>
+            <span style="color:var(--muted)">/</span>
+            <input type="number" id="renewMonth_${i}" value="${parseInt(mo)}" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر"/>
+            <span style="color:var(--muted)">/</span>
+            <input type="number" id="renewYear_${i}" value="${yr}" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة"/>
+          </div>
+          <div style="display:flex;gap:4px;align-items:center;">
+            <span style="color:var(--muted);font-size:0.82rem;">تنبيه قبل</span>
+            <input type="number" id="renewNDays_${i}" value="${exNDays}" min="1" max="365" class="form-input" style="width:65px;text-align:center;" placeholder="أيام"/>
+            <span style="color:var(--muted);font-size:0.82rem;">يوم الساعة</span>
+            <input type="number" id="renewNHr_${i}" value="${exNHr}" min="0" max="23" class="form-input" style="width:54px;text-align:center;" placeholder="9"/>
+            <span style="color:var(--muted)">:</span>
+            <input type="number" id="renewNMn_${i}" value="${exNMn}" min="0" max="59" class="form-input" style="width:54px;text-align:center;" placeholder="00"/>
           </div>
           <button class="primary-btn" style="padding:6px 16px;" data-confirm-renew="${i}">تأكيد</button>
           <button class="ghost-btn" style="padding:6px 12px;" data-cancel-renew="${i}">إلغاء</button>
@@ -569,6 +584,15 @@ function initManage() {
       const m = String(document.getElementById(`renewMonth_${i}`)?.value || 1).padStart(2, '0');
       const y = document.getElementById(`renewYear_${i}`)?.value || new Date().getFullYear() + 1;
       const newDate = `${y}-${m}-${d}`;
+      const nDaysVal = Number(document.getElementById(`renewNDays_${i}`)?.value);
+      if (nDaysVal > 0) {
+        const nd = new Date(newDate);
+        nd.setDate(nd.getDate() - nDaysVal);
+        const nHr = String(document.getElementById(`renewNHr_${i}`)?.value || 9).padStart(2,'0');
+        const nMn = String(document.getElementById(`renewNMn_${i}`)?.value || 0).padStart(2,'0');
+        alerts[i].notifyAt = `${nd.toISOString().slice(0,10)}T${nHr}:${nMn}`;
+        alerts[i].notifyFired = false;
+      }
       alerts[i].status = 'تم التجديد';
       alerts[i].urgent = false;
       alerts[i].time = 'تم التجديد';
