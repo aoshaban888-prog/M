@@ -728,16 +728,6 @@ function initManage() {
     renderManageList();
   });
 
-  resetDemoBtn?.addEventListener('click', () => {
-    if (confirm('سيتم استبدال كل البيانات بالبيانات الافتراضية. هل تريد المتابعة؟')) {
-      alerts = JSON.parse(JSON.stringify(defaultAlerts));
-      saveAlerts();
-      updateUrgentBadge();
-      updateSidebarSummary();
-      renderManageList();
-    }
-  });
-
   renderManageList();
 }
 
