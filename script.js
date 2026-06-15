@@ -320,7 +320,7 @@ function initAlerts() {
   addAlertBtn?.addEventListener('click', () => {
     const title = itemTitle?.value.trim();
     const detail = itemDetail?.value.trim();
-    if (!title || !detail) { alert('يرجى ملء العنوان والوصف'); return; }
+    if (!title) { alert('يرجى ملء العنوان'); return; }
     const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
@@ -577,7 +577,7 @@ function initManage() {
   addAlertBtn?.addEventListener('click', () => {
     const title = itemTitle?.value.trim();
     const detail = itemDetail?.value.trim();
-    if (!title || !detail) { alert('يرجى ملء العنوان والوصف'); return; }
+    if (!title) { alert('يرجى ملء العنوان'); return; }
     const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
