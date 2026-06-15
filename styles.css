@@ -251,6 +251,8 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
 @media (max-width: 1150px) {
   .app-shell { grid-template-columns: 1fr; }
   .sidebar { position: static; height: auto; flex-direction: row; flex-wrap: wrap; padding: 16px; gap: 12px; }
+  .nav-card { width: 100%; }
+  .mini-card { flex: 1 1 100%; }
   .sidebar-brand { flex: 1 1 100%; border-bottom: 1px solid var(--border); padding-bottom: 12px; }
   .nav-card { flex: 1 1 auto; flex-direction: row; display: flex; flex-wrap: wrap; }
   .mini-card { flex: 0 1 260px; margin-top: 0; }
@@ -259,8 +261,13 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
   .content { padding: 20px 16px; }
 }
 @media (max-width: 700px) {
-  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .content { padding: 14px; }
+  .stats-grid { grid-template-columns: 1fr; }
   .manage-grid { grid-template-columns: 1fr; }
-  .topbar { flex-direction: column; align-items: stretch; }
+  .topbar, .panel-head, .alert-top, .settings-row { flex-direction: column; align-items: stretch; }
+  .top-actions, .manage-actions { width: 100%; }
+  .top-actions button, .manage-actions button { width: 100%; justify-content: center; }
   .summary-grid { grid-template-columns: 1fr; }
+  .nav-card { display: grid; grid-template-columns: 1fr 1fr; }
+  .nav-link { font-size: 0.92rem; }
 }

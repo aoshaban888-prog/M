@@ -549,7 +549,7 @@ function initManage() {
     if (renewBtn) {
       const i = Number(renewBtn.dataset.renew);
       const actions = renewBtn.closest('.manage-actions');
-      const [yr, mo, dy] = addDays(365).split('-');
+      const currentExpiry = alerts[i].expiryDate || addDays(365);
       let exNDays = '', exNHr = '', exNMn = '';
       if (alerts[i].notifyAt && alerts[i].expiryDate) {
         const diff = Math.round((new Date(alerts[i].expiryDate) - new Date(alerts[i].notifyAt.split('T')[0])) / 86400000);
@@ -559,13 +559,10 @@ function initManage() {
       }
       actions.innerHTML = `
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-          <div style="display:flex;gap:4px;align-items:center;">
-            <input type="number" id="renewDay_${i}" value="${parseInt(dy)}" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم"/>
-            <span style="color:var(--muted)">/</span>
-            <input type="number" id="renewMonth_${i}" value="${parseInt(mo)}" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر"/>
-            <span style="color:var(--muted)">/</span>
-            <input type="number" id="renewYear_${i}" value="${yr}" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة"/>
-          </div>
+          <label style="margin:0;display:grid;gap:4px;min-width:190px;">
+            <span style="color:var(--muted);font-size:0.82rem;">تاريخ التجديد</span>
+            <input type="date" id="renewDate_${i}" value="${currentExpiry}" class="form-input" />
+          </label>
           <div style="display:flex;gap:4px;align-items:center;">
             <span style="color:var(--muted);font-size:0.82rem;">تنبيه قبل</span>
             <input type="number" id="renewNDays_${i}" value="${exNDays}" min="1" max="365" class="form-input" style="width:65px;text-align:center;" placeholder="أيام"/>
@@ -578,12 +575,10 @@ function initManage() {
           <button class="ghost-btn" style="padding:6px 12px;" data-cancel-renew="${i}">إلغاء</button>
         </div>`;
     }
+    const currentExpiry = alerts[Number(confirmBtn?.dataset.confirmRenew || -1)]?.expiryDate || addDays(365);
     if (confirmBtn) {
       const i = Number(confirmBtn.dataset.confirmRenew);
-      const d = String(document.getElementById(`renewDay_${i}`)?.value || 1).padStart(2, '0');
-      const m = String(document.getElementById(`renewMonth_${i}`)?.value || 1).padStart(2, '0');
-      const y = document.getElementById(`renewYear_${i}`)?.value || new Date().getFullYear() + 1;
-      const newDate = `${y}-${m}-${d}`;
+      const newDate = document.getElementById(`renewDate_${i}`)?.value || currentExpiry;
       const nDaysVal = Number(document.getElementById(`renewNDays_${i}`)?.value);
       if (nDaysVal > 0) {
         const nd = new Date(newDate);
@@ -612,7 +607,6 @@ function initManage() {
       const i = Number(editBtn.dataset.edit);
       const item = alerts[i];
       const article = editBtn.closest('article');
-      const [eYr, eMo, eDy] = (item.expiryDate || addDays(30)).split('-');
       let nDays = '', nHr = '', nMn = '';
       if (item.notifyAt && item.expiryDate) {
         const diff = Math.round((new Date(item.expiryDate) - new Date(item.notifyAt.split('T')[0])) / 86400000);
@@ -629,13 +623,7 @@ function initManage() {
           <label style="grid-column:1/-1;"><span>الوصف <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
             <input id="eDetail_${i}" type="text" class="form-input" value="${(item.detail||'').replace(/"/g,'&quot;')}" /></label>
           <label>تاريخ الانتهاء
-            <div style="display:flex;gap:4px;align-items:center;margin-top:4px;">
-              <input type="number" id="eDy_${i}" value="${parseInt(eDy)}" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم"/>
-              <span style="color:var(--muted)">/</span>
-              <input type="number" id="eMo_${i}" value="${parseInt(eMo)}" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر"/>
-              <span style="color:var(--muted)">/</span>
-              <input type="number" id="eYr_${i}" value="${eYr}" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة"/>
-            </div>
+            <input type="date" id="eDate_${i}" value="${item.expiryDate || addDays(30)}" class="form-input" />
           </label>
           <label>التنبيه قبل الانتهاء بـ
             <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
@@ -657,10 +645,7 @@ function initManage() {
       const i = Number(saveEdit.dataset.saveEdit);
       const title = document.getElementById(`eTitle_${i}`)?.value.trim();
       if (!title) { alert('يرجى ملء العنوان'); return; }
-      const dy = String(document.getElementById(`eDy_${i}`)?.value || 1).padStart(2,'0');
-      const mo = String(document.getElementById(`eMo_${i}`)?.value || 1).padStart(2,'0');
-      const yr = document.getElementById(`eYr_${i}`)?.value || today.getFullYear();
-      const expiryDate = `${yr}-${mo}-${dy}`;
+      const expiryDate = document.getElementById(`eDate_${i}`)?.value || alerts[i]?.expiryDate || addDays(30);
       const days = getRemainingDays({ expiryDate });
       const nDaysVal = Number(document.getElementById(`eNDays_${i}`)?.value);
       let notifyAt = undefined, notifyFired = false;
@@ -781,15 +766,48 @@ function initSettings() {
     alert('تم حفظ الإعدادات بنجاح!');
   });
 
-  document.getElementById('exportDataBtn')?.addEventListener('click', () => {
-    const blob = new Blob([JSON.stringify({ alerts, settings: appSettings }, null, 2)], { type: 'application/json' });
+  function downloadFile(content, fileName, type) {
+    const blob = new Blob([content], { type });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `alerts-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = fileName;
     a.click();
     URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('exportExcelBtn')?.addEventListener('click', () => {
+    const rows = [
+      ['الفئة', 'العنوان', 'الوصف', 'الأولوية', 'الحالة', 'تاريخ/الوقت'],
+      ...alerts.map(item => [item.label, item.title, item.detail, item.priority, item.status, item.time])
+    ];
+    const csv = rows.map(row => row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(',')).join('\n');
+    downloadFile(csv, `alerts-export-${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8;');
+    alert('تم تصدير البيانات بصيغة Excel/CSV');
   });
+
+  document.getElementById('exportPdfBtn')?.addEventListener('click', () => {
+    const html = `
+      <html dir="rtl" lang="ar">
+        <head><meta charset="UTF-8" /><title>تقرير التنبيهات</title></head>
+        <body style="font-family:Tahoma,Arial,sans-serif; padding:20px; color:#111;">
+          <h2 style="text-align:center">تقرير التنبيهات</h2>
+          <p style="text-align:center">تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
+          <table style="width:100%; border-collapse:collapse; font-size:12px;">
+            <thead><tr style="background:#f3f5f9"><th style="border:1px solid #ccc; padding:8px">الفئة</th><th style="border:1px solid #ccc; padding:8px">العنوان</th><th style="border:1px solid #ccc; padding:8px">الوصف</th><th style="border:1px solid #ccc; padding:8px">الأولوية</th><th style="border:1px solid #ccc; padding:8px">الحالة</th></tr></thead>
+            <tbody>${alerts.map(item => `<tr><td style="border:1px solid #ccc; padding:8px">${item.label}</td><td style="border:1px solid #ccc; padding:8px">${item.title}</td><td style="border:1px solid #ccc; padding:8px">${item.detail}</td><td style="border:1px solid #ccc; padding:8px">${item.priority}</td><td style="border:1px solid #ccc; padding:8px">${item.status}</td></tr>`).join('')}</tbody>
+          </table>
+        </body>
+      </html>`;
+    const printWindow = window.open('', '_blank', 'width=900,height=700');
+    if (!printWindow) { alert('يرجى السماح بفتح نافذة جديدة للطباعة'); return; }
+    printWindow.document.write(html);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    alert('تم تجهيز ملف PDF للطباعة');
+  });
+
 
   document.getElementById('importFile')?.addEventListener('change', e => {
     const file = e.target.files[0];
