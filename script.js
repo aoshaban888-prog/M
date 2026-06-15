@@ -622,8 +622,8 @@ function initManage() {
     if (itemDetail) itemDetail.value = '';
     if (itemDate) itemDate.value = '';
     if (itemDays) itemDays.value = '3';
-    const notifyFields = ['notifyDay','notifyMonth','notifyYear','notifyHour','notifyMinute'];
-    notifyFields.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const notifyDaysEl = document.getElementById('notifyDays');
+    if (notifyDaysEl) notifyDaysEl.value = '';
     updatePriorityPreview();
     updateUrgentBadge();
     updateSidebarSummary();
