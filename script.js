@@ -254,10 +254,10 @@ function renderAlerts(filter = '', category = activeFilter) {
       }).join('')
     : '<p class="muted">لا يوجد تنبيهات تطابق البحث الحالي.</p>';
 
-  lastSync.textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+  if (lastSync) lastSync.textContent = 'آخر تحديث: ' + new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
 }
 
-searchBox.addEventListener('input', (e) => renderAlerts(e.target.value));
+searchBox?.addEventListener('input', (e) => renderAlerts(e.target.value));
 
 function setActiveLink(id) {
   navLinks.forEach(link => {
