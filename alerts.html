@@ -98,10 +98,13 @@
           <input id="itemPriority" type="text" value="سيتم حسابها تلقائيًا" class="form-input" readonly />
           <small class="muted" id="priorityHint">تُحسب تلقائيًا</small>
         </label>
-        <label><span>التنبيه قبل الانتهاء بـ <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
-          <div style="display:flex;gap:8px;align-items:center;margin-top:4px;">
-            <input type="number" id="notifyDays" min="1" max="365" class="form-input" style="width:100px;text-align:center;" placeholder="مثال: 3" />
-            <span style="color:var(--muted);font-size:0.9rem;">يوم</span>
+        <label>التنبيه قبل الانتهاء بـ
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+            <input type="number" id="notifyDays" min="1" max="365" class="form-input" style="width:90px;text-align:center;" placeholder="مثال: 3" />
+            <span style="color:var(--muted);font-size:0.9rem;">يوم — الساعة</span>
+            <input type="number" id="notifyHour" min="0" max="23" class="form-input" style="width:58px;text-align:center;" placeholder="9" />
+            <span style="color:var(--muted)">:</span>
+            <input type="number" id="notifyMinute" min="0" max="59" class="form-input" style="width:58px;text-align:center;" placeholder="00" />
           </div>
         </label>
       </div>
