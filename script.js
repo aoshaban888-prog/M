@@ -73,6 +73,12 @@ function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
+function formatNotifyAt(notifyAt) {
+  if (!notifyAt) return '';
+  const [date, time] = notifyAt.split('T');
+  return `${formatDate(date)} — ${time}`;
+}
+
 function playExpirySound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
