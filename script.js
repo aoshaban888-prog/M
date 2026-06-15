@@ -23,13 +23,22 @@ const defaultAlerts = [
 const storageKey = 'alerts-admin-data';
 const settingsKey = 'alerts-admin-settings';
 
-let alerts = JSON.parse(localStorage.getItem(storageKey) || 'null') || defaultAlerts;
+let alerts = [];
 
 const defaultSettings = { notifBrowser: true, notifSound: true, notifDaily: true, notifSms: false, thresholdUrgent: 7, thresholdWarning: 15, thresholdLow: 30 };
-let appSettings = JSON.parse(localStorage.getItem(settingsKey) || 'null') || { ...defaultSettings };
+let appSettings = { ...defaultSettings };
 
-function saveAlerts() { localStorage.setItem(storageKey, JSON.stringify(alerts)); }
-function saveSettings() { localStorage.setItem(settingsKey, JSON.stringify(appSettings)); }
+// ── Firestore save (also keeps localStorage as offline cache) ──
+function saveAlerts() {
+  localStorage.setItem(storageKey, JSON.stringify(alerts));
+  db.collection('data').doc('alerts').set({ items: alerts }).catch(console.error);
+}
+
+function saveSettings() {
+  const clean = { ...defaultSettings, ...appSettings };
+  localStorage.setItem(settingsKey, JSON.stringify(clean));
+  db.collection('data').doc('settings').set(clean).catch(console.error);
+}
 
 function getRemainingDays(item) {
   if (!item.expiryDate) return 0;
@@ -94,7 +103,6 @@ function notifyExpiryWarning() {
   }
 }
 
-// Build a single alert card HTML
 function buildAlertCard(item, index, showActions = false) {
   const days = getRemainingDays(item);
   const pillClass = getDaysPillClass(days);
@@ -121,7 +129,6 @@ function buildAlertCard(item, index, showActions = false) {
     </article>`;
 }
 
-// Update sidebar urgent badge on all pages
 function updateUrgentBadge() {
   const urgentCount = alerts.filter(a => getRemainingDays(a) <= appSettings.thresholdUrgent).length;
   document.querySelectorAll('.js-urgent-badge').forEach(el => {
@@ -130,7 +137,6 @@ function updateUrgentBadge() {
   });
 }
 
-// Update sidebar summary
 function updateSidebarSummary() {
   const el = document.getElementById('sidebarSummary');
   if (!el) return;
@@ -148,11 +154,9 @@ function updateSidebarSummary() {
 // ══════════════════════════════════════
 
 function initDashboard() {
-  // Date
   const dateEl = document.getElementById('todayDate');
   if (dateEl) dateEl.textContent = today.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 
-  // Stats
   const critical = alerts.filter(a => getRemainingDays(a) <= appSettings.thresholdUrgent).length;
   const records = alerts.filter(a => a.type === 'records').length;
   const subs = alerts.filter(a => a.type === 'subscriptions').length;
@@ -163,7 +167,6 @@ function initDashboard() {
   document.getElementById('stat-subscriptions').textContent = subs;
   document.getElementById('stat-residences').textContent = res;
 
-  // Expiry banner
   const expiring = alerts.filter(a => getRemainingDays(a) <= appSettings.thresholdLow);
   const banner = document.getElementById('expiringBanner');
   if (banner && expiring.length > 0) {
@@ -172,7 +175,6 @@ function initDashboard() {
     notifyExpiryWarning();
   }
 
-  // Recent alerts (top 5 most urgent)
   const sorted = [...alerts].sort((a, b) => getRemainingDays(a) - getRemainingDays(b)).slice(0, 5);
   const recentEl = document.getElementById('recentAlerts');
   if (recentEl) {
@@ -181,7 +183,6 @@ function initDashboard() {
       : '<div class="empty-state"><p>لا توجد تنبيهات</p></div>';
   }
 
-  // Upcoming timeline
   const timelineEl = document.getElementById('upcomingTimeline');
   if (timelineEl) {
     const upcoming = [...alerts].sort((a, b) => getRemainingDays(a) - getRemainingDays(b)).slice(0, 6);
@@ -192,7 +193,6 @@ function initDashboard() {
     }).join('') || '<li><span class="muted">لا توجد عناصر قادمة</span></li>';
   }
 
-  // Summary
   const summaryEl = document.getElementById('summaryGrid');
   if (summaryEl) {
     const renewed = alerts.filter(a => a.status === 'تم التجديد').length;
@@ -205,7 +205,6 @@ function initDashboard() {
       <div class="summary-item"><h4 style="color:var(--warning)">${expiring.length}</h4><p>تنتهي خلال ${appSettings.thresholdLow} يوماً</p></div>`;
   }
 
-  // System status
   const statusEl = document.getElementById('systemStatus');
   if (statusEl) {
     statusEl.innerHTML = `
@@ -216,6 +215,10 @@ function initDashboard() {
       <div style="display:flex;justify-content:space-between;font-size:0.9rem;padding:8px 0;border-bottom:1px solid var(--border)">
         <span style="color:var(--muted)">حالة النظام</span>
         <span style="color:var(--success)">● يعمل بشكل طبيعي</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:0.9rem;padding:8px 0;border-bottom:1px solid var(--border)">
+        <span style="color:var(--muted)">قاعدة البيانات</span>
+        <span style="color:var(--success)">● Firebase Firestore</span>
       </div>
       <div style="display:flex;justify-content:space-between;font-size:0.9rem;padding:8px 0;border-bottom:1px solid var(--border)">
         <span style="color:var(--muted)">الإشعارات</span>
@@ -386,7 +389,6 @@ function initCalendar() {
       const isToday = dateStr === today.toISOString().slice(0, 10);
       const items = getItemsForDate(dateStr);
       const hasUrgent = items.some(a => getRemainingDays(a) <= appSettings.thresholdUrgent);
-      const hasWarning = items.some(a => { const dd = getRemainingDays(a); return dd > appSettings.thresholdUrgent && dd <= appSettings.thresholdLow; });
       const isSelected = selectedDate === dateStr;
       let cls = 'cal-cell';
       if (isToday) cls += ' today';
@@ -664,25 +666,55 @@ function initSettings() {
     const storageSize = document.getElementById('storageSize');
     if (lastUpdate) lastUpdate.textContent = today.toLocaleDateString('ar-EG');
     if (totalItems) totalItems.textContent = alerts.length;
-    if (storageSize) {
-      const size = new Blob([localStorage.getItem(storageKey) || '']).size;
-      storageSize.textContent = size < 1024 ? `${size} B` : `${(size / 1024).toFixed(1)} KB`;
-    }
+    if (storageSize) storageSize.textContent = 'Firestore ☁️';
   }
 
   updateInfoPanel();
 }
 
 // ══════════════════════════════════════
-//  INIT
+//  FIRESTORE LOAD + INIT
 // ══════════════════════════════════════
 
-updateUrgentBadge();
-updateSidebarSummary();
+async function main() {
+  try {
+    const [alertsDoc, settingsDoc] = await Promise.all([
+      db.collection('data').doc('alerts').get(),
+      db.collection('data').doc('settings').get()
+    ]);
 
-const pageId = document.body.id;
-if (pageId === 'page-dashboard') initDashboard();
-else if (pageId === 'page-alerts') initAlerts();
-else if (pageId === 'page-calendar') initCalendar();
-else if (pageId === 'page-manage') initManage();
-else if (pageId === 'page-settings') initSettings();
+    if (alertsDoc.exists && alertsDoc.data().items) {
+      alerts = alertsDoc.data().items;
+      localStorage.setItem(storageKey, JSON.stringify(alerts));
+    } else {
+      // First run: migrate localStorage data to Firestore
+      alerts = JSON.parse(localStorage.getItem(storageKey) || 'null') || defaultAlerts;
+      db.collection('data').doc('alerts').set({ items: alerts });
+    }
+
+    if (settingsDoc.exists) {
+      appSettings = { ...defaultSettings, ...settingsDoc.data() };
+      localStorage.setItem(settingsKey, JSON.stringify(appSettings));
+    } else {
+      appSettings = JSON.parse(localStorage.getItem(settingsKey) || 'null') || { ...defaultSettings };
+      db.collection('data').doc('settings').set({ ...defaultSettings, ...appSettings });
+    }
+  } catch (e) {
+    // Offline fallback
+    console.warn('Firestore unavailable, using local cache:', e.message);
+    alerts = JSON.parse(localStorage.getItem(storageKey) || 'null') || defaultAlerts;
+    appSettings = JSON.parse(localStorage.getItem(settingsKey) || 'null') || { ...defaultSettings };
+  }
+
+  updateUrgentBadge();
+  updateSidebarSummary();
+
+  const pageId = document.body.id;
+  if (pageId === 'page-dashboard') initDashboard();
+  else if (pageId === 'page-alerts') initAlerts();
+  else if (pageId === 'page-calendar') initCalendar();
+  else if (pageId === 'page-manage') initManage();
+  else if (pageId === 'page-settings') initSettings();
+}
+
+main();
