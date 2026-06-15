@@ -817,15 +817,6 @@ function initSettings() {
     reader.readAsText(file);
   });
 
-  document.getElementById('resetDemoBtn')?.addEventListener('click', () => {
-    if (confirm('هل تريد استعادة البيانات الافتراضية؟')) {
-      alerts = JSON.parse(JSON.stringify(defaultAlerts));
-      saveAlerts();
-      alert('تم استعادة البيانات الافتراضية');
-      updateInfoPanel();
-    }
-  });
-
   document.getElementById('clearAllBtn')?.addEventListener('click', () => {
     if (confirm('تحذير: سيتم حذف كل البيانات نهائياً. هل أنت متأكد؟')) {
       if (confirm('تأكيد أخير: حذف كل البيانات؟')) {
