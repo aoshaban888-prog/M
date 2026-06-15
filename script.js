@@ -530,16 +530,26 @@ function initManage() {
     if (renewBtn) {
       const i = Number(renewBtn.dataset.renew);
       const actions = renewBtn.closest('.manage-actions');
+      const [yr, mo, dy] = addDays(365).split('-');
       actions.innerHTML = `
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-          <input type="date" class="form-input" id="renewDate_${i}" value="${addDays(365)}" style="flex:1;min-width:140px;" />
+          <div style="display:flex;gap:4px;align-items:center;">
+            <input type="number" id="renewDay_${i}" value="${parseInt(dy)}" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم" />
+            <span style="color:var(--muted);">/</span>
+            <input type="number" id="renewMonth_${i}" value="${parseInt(mo)}" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر" />
+            <span style="color:var(--muted);">/</span>
+            <input type="number" id="renewYear_${i}" value="${yr}" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة" />
+          </div>
           <button class="primary-btn" style="padding:6px 16px;" data-confirm-renew="${i}">تأكيد</button>
           <button class="ghost-btn" style="padding:6px 12px;" data-cancel-renew="${i}">إلغاء</button>
         </div>`;
     }
     if (confirmBtn) {
       const i = Number(confirmBtn.dataset.confirmRenew);
-      const newDate = document.getElementById(`renewDate_${i}`)?.value || addDays(365);
+      const d = String(document.getElementById(`renewDay_${i}`)?.value || 1).padStart(2, '0');
+      const m = String(document.getElementById(`renewMonth_${i}`)?.value || 1).padStart(2, '0');
+      const y = document.getElementById(`renewYear_${i}`)?.value || new Date().getFullYear() + 1;
+      const newDate = `${y}-${m}-${d}`;
       alerts[i].status = 'تم التجديد';
       alerts[i].urgent = false;
       alerts[i].time = 'تم التجديد';
