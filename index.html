@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>موقع التنبيهات</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">نظام التنبيهات</p>
+          <h1>لوحة تنبيهات ذكية</h1>
+          <p class="muted">
+            يتتبع هذا الموقع السجلات والاشتراكات والإقامات التي تقترب من
+            الانتهاء ويعرضها بشكل واضح وسريع.
+          </p>
+        </div>
+
+        <nav class="nav-card">
+          <a class="nav-link active" href="#overview">نظرة عامة</a>
+          <a class="nav-link" href="#alerts">التنبيهات</a>
+          <a class="nav-link" href="#calendar">التقويم</a>
+          <a class="nav-link" href="#manage">لوحة الإدارة</a>
+          <a class="nav-link" href="#settings">الإعدادات</a>
+        </nav>
+
+        <section class="mini-card">
+          <h3>المهام القادمة</h3>
+          <ul>
+            <li>تجديد اشتراك 3 عملاء خلال 48 ساعة</li>
+            <li>إنهاء إقامة موظف واحد خلال 72 ساعة</li>
+            <li>تحديث سجل 5 ملفات قيد المراجعة</li>
+          </ul>
+        </section>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">اليوم</p>
+            <h2>تنبيهاتك المنهجية</h2>
+          </div>
+          <div class="top-actions">
+            <button class="ghost-btn">تصدير</button>
+            <button class="primary-btn">إرسال تنبيه جماعي</button>
+          </div>
+        </header>
+
+        <section id="overview" class="stats-grid">
+          <article id="expiringBanner" class="stat-card urgent" style="grid-column: 1 / -1; display: none;">
+            <span>تنبيه مهم</span>
+            <strong>سجل أو اشتراك أو إقامة يقترب من الانتهاء</strong>
+            <small>سيظهر هنا أي عنصر يبقى عليه 30 يومًا أو أقل.</small>
+          </article>
+          <article class="stat-card urgent">
+            <span>تنبيهات حرجة</span>
+            <strong>12</strong>
+            <small>تنتهي خلال 48 ساعة</small>
+          </article>
+          <article class="stat-card">
+            <span>السجلات</span>
+            <strong>84</strong>
+            <small>تحتاج مراجعة أو تجديد</small>
+          </article>
+          <article class="stat-card">
+            <span>الاشتراكات</span>
+            <strong>27</strong>
+            <small>قريبة من الانتهاء</small>
+          </article>
+          <article class="stat-card">
+            <span>الإقامات</span>
+            <strong>9</strong>
+            <small>ستنتهي هذا الأسبوع</small>
+          </article>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel" id="alerts">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">قائمة التنبيهات</p>
+                <h3>كل العناصر التي تحتاج متابعة</h3>
+              </div>
+              <div class="panel-side">
+                <span class="badge" id="lastSync">آخر تحديث: الآن</span>
+                <input id="searchBox" type="search" placeholder="ابحث عن سجل أو اشتراك أو إقامة..." />
+              </div>
+            </div>
+
+            <div class="chip-row" id="filterChips">
+              <button class="chip active" data-filter="all">الكل</button>
+              <button class="chip" data-filter="records">سجلات</button>
+              <button class="chip" data-filter="subscriptions">اشتراكات</button>
+              <button class="chip" data-filter="residences">إقامات</button>
+              <button class="chip" data-filter="urgent">حرج</button>
+            </div>
+
+            <div class="alert-list" id="alertList"></div>
+          </article>
+
+          <article class="panel" id="calendar">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">التقويم</p>
+                <h3>الأيام القادمة</h3>
+              </div>
+              <span class="badge">هذا الأسبوع</span>
+            </div>
+
+            <ul class="timeline">
+              <li><strong>اليوم</strong><span>تنبيه تجديد 4 اشتراكات</span></li>
+              <li><strong>غداً</strong><span>تجديد إقامة موظف واحد</span></li>
+              <li><strong>الخميس</strong><span>مراجعة 6 سجلات قديمة</span></li>
+              <li><strong>الجمعة</strong><span>تذكير بموعد متابعة الإقامات</span></li>
+            </ul>
+          </article>
+        </section>
+
+        <section class="dashboard-grid lower-grid">
+          <article class="panel" id="settings">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">الإعدادات</p>
+                <h3>خيارات التنبيه</h3>
+              </div>
+              <button class="ghost-btn small-btn">تحديث الإعدادات</button>
+            </div>
+            <div class="settings-list">
+              <label><input type="checkbox" checked /> إرسال تنبيهات عبر البريد</label>
+              <label><input type="checkbox" checked /> إشعارات داخل النظام</label>
+              <label><input type="checkbox" /> تذكير SMS قبل 24 ساعة</label>
+              <label><input type="checkbox" checked /> إرسال ملخص يومي</label>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">الملخص</p>
+                <h3>أهم الإحصائيات</h3>
+              </div>
+            </div>
+            <div class="summary-box">
+              <div>
+                <h4>92%</h4>
+                <p>من التنبيهات تم التعامل معها خلال اليوم</p>
+              </div>
+              <div>
+                <h4>7</h4>
+                <p>عناصر تحتاج إعادة التحقق قبل الغد</p>
+              </div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

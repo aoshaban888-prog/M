@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>لوحة الإدارة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">لوحة الإدارة</p>
+          <h1>إدارة السجلات والتجديدات</h1>
+          <p class="muted">يمكنك من هنا إضافة عناصر جديدة وتعديلها وتحديثها بشكل مستقل عن الصفحة الرئيسية.</p>
+        </div>
+
+        <nav class="nav-card">
+          <a class="nav-link" href="index.html#overview">الرئيسية</a>
+          <a class="nav-link active" href="manage.html">لوحة الإدارة</a>
+          <a class="nav-link" href="index.html#alerts">التنبيهات</a>
+          <a class="nav-link" href="index.html#settings">الإعدادات</a>
+        </nav>
+
+        <section class="mini-card">
+          <h3>ماذا يمكنك فعله هنا</h3>
+          <ul>
+            <li>إضافة سجل أو اشتراك أو إقامة جديد</li>
+            <li>تعديل تاريخ التجديد والأولوية تلقائيًا</li>
+            <li>تجديد أو حذف العناصر بسهولة</li>
+          </ul>
+        </section>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">إدارة مستقلة</p>
+            <h2>لوحة الإدارة</h2>
+          </div>
+          <div class="top-actions">
+            <a class="ghost-btn" href="index.html">العودة للصفحة الرئيسية</a>
+            <button id="resetDemoBtn" class="ghost-btn small-btn">إعادة البيانات الافتراضية</button>
+          </div>
+        </header>
+
+        <section class="dashboard-grid">
+          <article class="panel" id="manage">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">إضافة وتعديل وتجديد العناصر</p>
+                <h3>لوحة الإدارة المستقلة</h3>
+              </div>
+            </div>
+
+            <div class="manage-grid">
+              <label>الفئة
+                <select id="itemType">
+                  <option value="records">سجل</option>
+                  <option value="subscriptions">اشتراك</option>
+                  <option value="residences">إقامة</option>
+                </select>
+              </label>
+              <label>العنوان
+                <input id="itemTitle" type="text" placeholder="مثال: سجل موظف جديد" />
+              </label>
+              <label>الوصف
+                <input id="itemDetail" type="text" placeholder="مثال: يحتاج تجديد خلال 3 أيام" />
+              </label>
+              <label>الأولوية
+                <input id="itemPriority" type="text" value="سيتم حسابها تلقائيًا" readonly />
+                <small id="priorityHint" class="muted" style="font-size: 0.88rem;">تُحسب تلقائيًا من تاريخ الانتهاء أو الأيام المتبقية.</small>
+              </label>
+              <label>الأيام المتبقية
+                <input id="itemDays" type="number" min="0" value="3" readonly />
+                <small class="muted" style="font-size: 0.88rem;">يتم حسابها تلقائيًا من تاريخ التجديد.</small>
+              </label>
+              <label>تاريخ التجديد
+                <input id="itemDate" type="date" />
+              </label>
+              <button id="addAlertBtn" class="primary-btn">إضافة عنصر</button>
+            </div>
+
+            <div id="manageList" class="manage-list"></div>
+          </article>
+
+          <article class="panel" id="settings">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">الإعدادات</p>
+                <h3>خيارات التنبيه</h3>
+              </div>
+            </div>
+            <div class="settings-list">
+              <label><input type="checkbox" checked /> إرسال تنبيهات عبر البريد</label>
+              <label><input type="checkbox" checked /> إشعارات داخل النظام</label>
+              <label><input type="checkbox" /> تذكير SMS قبل 24 ساعة</label>
+              <label><input type="checkbox" checked /> إرسال ملخص يومي</label>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
