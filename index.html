@@ -1,168 +1,159 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>نظام التنبيهات</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="app-shell">
-      <aside class="sidebar">
-        <div>
-          <p class="eyebrow">نظام التنبيهات</p>
-          <h1>لوحة تنبيهات ذكية</h1>
-          <p class="muted">
-            يتتبع هذا الموقع السجلات والاشتراكات والإقامات التي تقترب من
-            الانتهاء ويعرضها بشكل واضح وسريع.
-          </p>
-        </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم — نظام التنبيهات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body id="page-dashboard">
+<div class="app-shell">
 
-        <nav class="nav-card">
-          <a class="nav-link active" href="#overview">نظرة عامة</a>
-          <a class="nav-link" href="#alerts">التنبيهات</a>
-          <a class="nav-link" href="#calendar">التقويم</a>
-          <a class="nav-link" href="#manage">لوحة الإدارة</a>
-          <a class="nav-link" href="#settings">الإعدادات</a>
-        </nav>
-
-        <section class="mini-card">
-          <h3>المهام القادمة</h3>
-          <ul>
-            <li>تجديد اشتراك 3 عملاء خلال 48 ساعة</li>
-            <li>إنهاء إقامة موظف واحد خلال 72 ساعة</li>
-            <li>تحديث سجل 5 ملفات قيد المراجعة</li>
-          </ul>
-        </section>
-      </aside>
-
-      <main class="content">
-        <header class="topbar">
-          <div>
-            <p class="eyebrow">اليوم</p>
-            <h2>تنبيهاتك المنهجية</h2>
-          </div>
-          <div class="top-actions">
-            <button class="ghost-btn">تصدير</button>
-            <button class="primary-btn">إرسال تنبيه جماعي</button>
-          </div>
-        </header>
-
-        <section id="overview" class="stats-grid">
-          <article id="expiringBanner" class="stat-card urgent" style="grid-column: 1 / -1; display: none;">
-            <span>تنبيه مهم</span>
-            <strong>سجل أو اشتراك أو إقامة يقترب من الانتهاء</strong>
-            <small>سيظهر هنا أي عنصر يبقى عليه 30 يومًا أو أقل.</small>
-          </article>
-          <article class="stat-card urgent">
-            <span>تنبيهات حرجة</span>
-            <strong>12</strong>
-            <small>تنتهي خلال 48 ساعة</small>
-          </article>
-          <article class="stat-card">
-            <span>السجلات</span>
-            <strong>84</strong>
-            <small>تحتاج مراجعة أو تجديد</small>
-          </article>
-          <article class="stat-card">
-            <span>الاشتراكات</span>
-            <strong>27</strong>
-            <small>قريبة من الانتهاء</small>
-          </article>
-          <article class="stat-card">
-            <span>الإقامات</span>
-            <strong>9</strong>
-            <small>ستنتهي هذا الأسبوع</small>
-          </article>
-        </section>
-
-        <section class="dashboard-grid">
-          <article class="panel" id="alerts">
-            <div class="panel-head">
-              <div>
-                <p class="eyebrow">قائمة التنبيهات</p>
-                <h3>كل العناصر التي تحتاج متابعة</h3>
-              </div>
-              <div class="panel-side">
-                <span class="badge" id="lastSync">آخر تحديث: الآن</span>
-                <input id="searchBox" type="search" placeholder="ابحث عن سجل أو اشتراك أو إقامة..." />
-              </div>
-            </div>
-
-            <div class="chip-row" id="filterChips">
-              <button class="chip active" data-filter="all">الكل</button>
-              <button class="chip" data-filter="records">سجلات</button>
-              <button class="chip" data-filter="subscriptions">اشتراكات</button>
-              <button class="chip" data-filter="residences">إقامات</button>
-              <button class="chip" data-filter="urgent">حرج</button>
-            </div>
-
-            <div class="alert-list" id="alertList"></div>
-          </article>
-
-          <article class="panel" id="calendar">
-            <div class="panel-head">
-              <div>
-                <p class="eyebrow">التقويم</p>
-                <h3>الأيام القادمة</h3>
-              </div>
-              <span class="badge">هذا الأسبوع</span>
-            </div>
-
-            <ul class="timeline">
-              <li><strong>اليوم</strong><span>تنبيه تجديد 4 اشتراكات</span></li>
-              <li><strong>غداً</strong><span>تجديد إقامة موظف واحد</span></li>
-              <li><strong>الخميس</strong><span>مراجعة 6 سجلات قديمة</span></li>
-              <li><strong>الجمعة</strong><span>تذكير بموعد متابعة الإقامات</span></li>
-            </ul>
-          </article>
-        </section>
-
-        <section class="dashboard-grid lower-grid">
-          <article class="panel" id="settings">
-            <div class="panel-head">
-              <div>
-                <p class="eyebrow">الإعدادات</p>
-                <h3>خيارات التنبيه</h3>
-              </div>
-              <button class="ghost-btn small-btn">تحديث الإعدادات</button>
-            </div>
-            <div class="settings-list">
-              <label><input type="checkbox" checked /> إرسال تنبيهات عبر البريد</label>
-              <label><input type="checkbox" checked /> إشعارات داخل النظام</label>
-              <label><input type="checkbox" /> تذكير SMS قبل 24 ساعة</label>
-              <label><input type="checkbox" checked /> إرسال ملخص يومي</label>
-            </div>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <div>
-                <p class="eyebrow">الملخص</p>
-                <h3>أهم الإحصائيات</h3>
-              </div>
-            </div>
-            <div class="summary-box">
-              <div>
-                <h4>92%</h4>
-                <p>من التنبيهات تم التعامل معها خلال اليوم</p>
-              </div>
-              <div>
-                <h4>7</h4>
-                <p>عناصر تحتاج إعادة التحقق قبل الغد</p>
-              </div>
-            </div>
-          </article>
-        </section>
-      </main>
+  <!-- ══ Sidebar ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <p class="eyebrow">نظام التنبيهات</p>
+      <h1>لوحة تحكم ذكية</h1>
+      <p class="muted" style="margin-top:4px;">إدارة السجلات والاشتراكات والإقامات</p>
     </div>
 
-    <script src="script.js"></script>
-  </body>
+    <nav class="nav-card">
+      <a class="nav-link active" href="index.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        نظرة عامة
+      </a>
+      <a class="nav-link" href="alerts.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        التنبيهات
+        <span class="nav-badge js-urgent-badge" style="display:none">0</span>
+      </a>
+      <a class="nav-link" href="calendar.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        التقويم
+      </a>
+      <a class="nav-link" href="manage.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        لوحة الإدارة
+      </a>
+      <a class="nav-link" href="settings.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        الإعدادات
+      </a>
+    </nav>
+
+    <div class="mini-card">
+      <h3>ملخص سريع</h3>
+      <ul id="sidebarSummary">
+        <li>جارٍ التحميل...</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ══ Content ══ -->
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow" id="todayDate"></p>
+        <h2>لوحة التحكم الرئيسية</h2>
+      </div>
+      <div class="top-actions">
+        <button class="ghost-btn" onclick="location.href='alerts.html'">عرض التنبيهات</button>
+        <button class="primary-btn" onclick="location.href='manage.html'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:middle"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          إضافة عنصر جديد
+        </button>
+      </div>
+    </header>
+
+    <!-- Expiry Banner -->
+    <div class="expiry-banner" id="expiringBanner" style="display:none">
+      <div class="expiry-banner-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      </div>
+      <div class="expiry-banner-text">
+        <strong id="expiringBannerText">تنبيه مهم</strong>
+        <small>توجه إلى صفحة التنبيهات لاتخاذ الإجراء اللازم</small>
+      </div>
+      <a href="alerts.html" class="badge urgent" style="margin-right:auto; flex-shrink:0">عرض التنبيهات ←</a>
+    </div>
+
+    <!-- Stats -->
+    <section class="stats-grid">
+      <article class="stat-card urgent">
+        <span>تنبيهات حرجة</span>
+        <strong id="stat-critical">0</strong>
+        <small>تنتهي خلال 7 أيام</small>
+      </article>
+      <article class="stat-card">
+        <span>السجلات</span>
+        <strong id="stat-records">0</strong>
+        <small>إجمالي السجلات</small>
+      </article>
+      <article class="stat-card">
+        <span>الاشتراكات</span>
+        <strong id="stat-subscriptions">0</strong>
+        <small>إجمالي الاشتراكات</small>
+      </article>
+      <article class="stat-card">
+        <span>الإقامات</span>
+        <strong id="stat-residences">0</strong>
+        <small>إجمالي الإقامات</small>
+      </article>
+    </section>
+
+    <!-- Main Grid -->
+    <section class="dashboard-grid">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">أحدث التنبيهات</p>
+            <h3>العناصر الأكثر إلحاحاً</h3>
+          </div>
+          <a href="alerts.html" class="badge">عرض الكل ←</a>
+        </div>
+        <div class="alert-list" id="recentAlerts">
+          <p class="muted">جارٍ التحميل...</p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">قريباً</p>
+            <h3>الأيام القادمة</h3>
+          </div>
+          <a href="calendar.html" class="badge">التقويم ←</a>
+        </div>
+        <ul class="timeline" id="upcomingTimeline"></ul>
+      </article>
+    </section>
+
+    <!-- Lower Grid -->
+    <section class="lower-grid" style="display:grid; gap:18px; margin-top:18px;">
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">إحصائيات</p>
+            <h3>ملخص النظام</h3>
+          </div>
+        </div>
+        <div class="summary-grid" id="summaryGrid"></div>
+      </article>
+      <article class="panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">حالة النظام</p>
+            <h3>آخر تحديث</h3>
+          </div>
+        </div>
+        <div id="systemStatus" style="display:grid; gap:10px;"></div>
+      </article>
+    </section>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
 </html>
