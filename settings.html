@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>الإعدادات — نظام التنبيهات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body id="page-settings">
+<div class="app-shell">
+
+  <!-- ══ Sidebar ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <p class="eyebrow">نظام التنبيهات</p>
+      <h1>لوحة تحكم ذكية</h1>
+      <p class="muted" style="margin-top:4px;">إدارة السجلات والاشتراكات والإقامات</p>
+    </div>
+    <nav class="nav-card">
+      <a class="nav-link" href="index.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        نظرة عامة
+      </a>
+      <a class="nav-link" href="alerts.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        التنبيهات
+        <span class="nav-badge js-urgent-badge" style="display:none">0</span>
+      </a>
+      <a class="nav-link" href="calendar.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        التقويم
+      </a>
+      <a class="nav-link" href="manage.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        لوحة الإدارة
+      </a>
+      <a class="nav-link active" href="settings.html">
+        <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        الإعدادات
+      </a>
+    </nav>
+    <div class="mini-card">
+      <h3>ملخص سريع</h3>
+      <ul id="sidebarSummary"><li>جارٍ التحميل...</li></ul>
+    </div>
+  </aside>
+
+  <!-- ══ Content ══ -->
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">التفضيلات والإعدادات</p>
+        <h2>إعدادات النظام</h2>
+      </div>
+      <div class="top-actions">
+        <button class="primary-btn small-btn" id="saveSettingsBtn">حفظ الإعدادات</button>
+      </div>
+    </header>
+
+    <div class="two-col">
+      <!-- Notifications -->
+      <div style="display:grid; gap:18px;">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">التنبيهات</p>
+              <h3>إعدادات الإشعارات</h3>
+            </div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>إشعارات المتصفح</h4>
+                <p>تلقّي إشعارات فورية عند اقتراب موعد التجديد</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notifBrowser" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>صوت التنبيه</h4>
+                <p>تشغيل صوت عند ظهور تنبيه حرج</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notifSound" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>إرسال ملخص يومي</h4>
+                <p>عرض ملخص يومي للعناصر المنتهية قريباً</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notifDaily" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>تذكير SMS</h4>
+                <p>تذكير برسالة نصية قبل 24 ساعة</p>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notifSms" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </article>
+
+        <!-- Thresholds -->
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">حدود التحذير</p>
+              <h3>مستويات الأولوية</h3>
+            </div>
+          </div>
+          <div class="settings-section">
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>حرج <span class="badge urgent" style="font-size:0.75rem">عالي</span></h4>
+                <p>عدد الأيام قبل الاعتبار حرجاً</p>
+              </div>
+              <input type="number" class="number-input" id="thresholdUrgent" value="7" min="1" max="30" />
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>تحذير <span class="badge warning" style="font-size:0.75rem">متوسط</span></h4>
+                <p>عدد الأيام قبل الاعتبار تحذيراً</p>
+              </div>
+              <input type="number" class="number-input" id="thresholdWarning" value="15" min="1" max="60" />
+            </div>
+            <div class="settings-row">
+              <div class="settings-row-info">
+                <h4>منخفض <span class="badge" style="font-size:0.75rem">عادي</span></h4>
+                <p>عدد الأيام للاعتبار منخفض الأولوية</p>
+              </div>
+              <input type="number" class="number-input" id="thresholdLow" value="30" min="1" max="365" />
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Data Management -->
+      <div style="display:grid; gap:18px; align-content:start;">
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">إدارة البيانات</p>
+              <h3>تصدير واستيراد</h3>
+            </div>
+          </div>
+          <div style="display:grid; gap:10px;">
+            <button class="ghost-btn" id="exportDataBtn" style="width:100%; padding:12px; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              تصدير البيانات (JSON)
+            </button>
+            <label class="ghost-btn" style="width:100%; padding:12px; text-align:center; display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              استيراد البيانات (JSON)
+              <input type="file" id="importFile" accept=".json" style="display:none" />
+            </label>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">إعادة الضبط</p>
+              <h3>خيارات متقدمة</h3>
+            </div>
+          </div>
+          <div style="display:grid; gap:10px;">
+            <button class="ghost-btn" id="resetDemoBtn" style="width:100%; padding:12px;">
+              إعادة البيانات الافتراضية
+            </button>
+            <button class="danger-btn" id="clearAllBtn" style="width:100%; padding:12px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:6px;vertical-align:middle"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+              حذف كل البيانات
+            </button>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">حول النظام</p>
+              <h3>معلومات التطبيق</h3>
+            </div>
+          </div>
+          <div style="display:grid; gap:8px; font-size:0.9rem; color:var(--muted);">
+            <div style="display:flex; justify-content:space-between;"><span>الإصدار</span><span style="color:var(--text);">1.0.0</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>آخر تحديث</span><span style="color:var(--text);" id="lastUpdateDate"></span></div>
+            <div style="display:flex; justify-content:space-between;"><span>عدد العناصر</span><span style="color:var(--text);" id="totalItems">0</span></div>
+            <div style="display:flex; justify-content:space-between;"><span>مساحة التخزين</span><span style="color:var(--text);" id="storageSize">0 KB</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
