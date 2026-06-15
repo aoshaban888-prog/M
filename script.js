@@ -532,6 +532,7 @@ function initManage() {
             ${item.notifyAt ? `<div class="alert-meta">🔔 التنبيه: ${formatNotifyAt(item.notifyAt)}</div>` : ''}
             <div class="manage-actions">
               <button class="action-renew" data-renew="${i}">تجديد الآن</button>
+              <button class="action-edit" data-edit="${i}">تعديل</button>
               <button class="action-delete" data-delete="${i}">حذف</button>
             </div>
           </article>`;
