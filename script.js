@@ -330,14 +330,14 @@ function initAlerts() {
     const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
-    const nDy = document.getElementById('notifyDay')?.value;
-    const nMo = document.getElementById('notifyMonth')?.value;
-    const nYr = document.getElementById('notifyYear')?.value;
-    const nHr = document.getElementById('notifyHour')?.value;
-    const nMn = document.getElementById('notifyMinute')?.value;
+    const nDays = Number(document.getElementById('notifyDays')?.value);
     let notifyAt = null;
-    if (nDy && nMo && nYr && nHr !== '' && nMn !== '') {
-      notifyAt = `${nYr}-${String(nMo).padStart(2,'0')}-${String(nDy).padStart(2,'0')}T${String(nHr).padStart(2,'0')}:${String(nMn).padStart(2,'0')}`;
+    if (nDays > 0) {
+      const expiryForNotify = expiryDate;
+      const notifyDate = new Date(expiryForNotify);
+      notifyDate.setDate(notifyDate.getDate() - nDays);
+      const nd = notifyDate.toISOString().slice(0, 10);
+      notifyAt = `${nd}T09:00`;
     }
     alerts.unshift({
       type: itemType?.value || 'records',
@@ -598,14 +598,14 @@ function initManage() {
     const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
-    const nDy = document.getElementById('notifyDay')?.value;
-    const nMo = document.getElementById('notifyMonth')?.value;
-    const nYr = document.getElementById('notifyYear')?.value;
-    const nHr = document.getElementById('notifyHour')?.value;
-    const nMn = document.getElementById('notifyMinute')?.value;
+    const nDays = Number(document.getElementById('notifyDays')?.value);
     let notifyAt = null;
-    if (nDy && nMo && nYr && nHr !== '' && nMn !== '') {
-      notifyAt = `${nYr}-${String(nMo).padStart(2,'0')}-${String(nDy).padStart(2,'0')}T${String(nHr).padStart(2,'0')}:${String(nMn).padStart(2,'0')}`;
+    if (nDays > 0) {
+      const expiryForNotify = expiryDate;
+      const notifyDate = new Date(expiryForNotify);
+      notifyDate.setDate(notifyDate.getDate() - nDays);
+      const nd = notifyDate.toISOString().slice(0, 10);
+      notifyAt = `${nd}T09:00`;
     }
     alerts.unshift({
       type: itemType?.value || 'records',
