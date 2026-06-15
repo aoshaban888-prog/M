@@ -333,11 +333,12 @@ function initAlerts() {
     const nDays = Number(document.getElementById('notifyDays')?.value);
     let notifyAt = null;
     if (nDays > 0) {
-      const expiryForNotify = expiryDate;
-      const notifyDate = new Date(expiryForNotify);
+      const notifyDate = new Date(expiryDate);
       notifyDate.setDate(notifyDate.getDate() - nDays);
       const nd = notifyDate.toISOString().slice(0, 10);
-      notifyAt = `${nd}T09:00`;
+      const nHr = String(document.getElementById('notifyHour')?.value || 9).padStart(2, '0');
+      const nMn = String(document.getElementById('notifyMinute')?.value || 0).padStart(2, '0');
+      notifyAt = `${nd}T${nHr}:${nMn}`;
     }
     alerts.unshift({
       type: itemType?.value || 'records',
@@ -601,11 +602,12 @@ function initManage() {
     const nDays = Number(document.getElementById('notifyDays')?.value);
     let notifyAt = null;
     if (nDays > 0) {
-      const expiryForNotify = expiryDate;
-      const notifyDate = new Date(expiryForNotify);
+      const notifyDate = new Date(expiryDate);
       notifyDate.setDate(notifyDate.getDate() - nDays);
       const nd = notifyDate.toISOString().slice(0, 10);
-      notifyAt = `${nd}T09:00`;
+      const nHr = String(document.getElementById('notifyHour')?.value || 9).padStart(2, '0');
+      const nMn = String(document.getElementById('notifyMinute')?.value || 0).padStart(2, '0');
+      notifyAt = `${nd}T${nHr}:${nMn}`;
     }
     alerts.unshift({
       type: itemType?.value || 'records',
