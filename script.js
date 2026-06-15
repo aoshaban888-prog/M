@@ -518,11 +518,9 @@ function initManage() {
             </div>
             <div class="alert-meta">${item.detail}</div>
             <div class="alert-meta">ينتهي: ${formatDate(item.expiryDate) || item.time}</div>
+            ${item.notifyAt ? `<div class="alert-meta">🔔 التنبيه: ${formatNotifyAt(item.notifyAt)}</div>` : ''}
             <div class="manage-actions">
               <button class="action-renew" data-renew="${i}">تجديد الآن</button>
-              <button class="action-notify" data-notify="${i}">
-                ${item.notifyAt && !item.notifyFired ? '🔔 ' + formatNotifyAt(item.notifyAt) : '🔔 تعيين تنبيه'}
-              </button>
               <button class="action-delete" data-delete="${i}">حذف</button>
             </div>
           </article>`;
