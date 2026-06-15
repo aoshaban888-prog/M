@@ -588,6 +588,15 @@ function initManage() {
     const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
+    const nDy = document.getElementById('notifyDay')?.value;
+    const nMo = document.getElementById('notifyMonth')?.value;
+    const nYr = document.getElementById('notifyYear')?.value;
+    const nHr = document.getElementById('notifyHour')?.value;
+    const nMn = document.getElementById('notifyMinute')?.value;
+    let notifyAt = null;
+    if (nDy && nMo && nYr && nHr !== '' && nMn !== '') {
+      notifyAt = `${nYr}-${String(nMo).padStart(2,'0')}-${String(nDy).padStart(2,'0')}T${String(nHr).padStart(2,'0')}:${String(nMn).padStart(2,'0')}`;
+    }
     alerts.unshift({
       type: itemType?.value || 'records',
       label: itemType?.options[itemType.selectedIndex]?.text || 'سجل',
@@ -595,13 +604,16 @@ function initManage() {
       status: days <= 2 ? 'مستعجل' : 'قريب',
       urgent: days <= appSettings.thresholdUrgent,
       time: `ينتهي ${formatDate(expiryDate)}`,
-      expiryDate
+      expiryDate,
+      ...(notifyAt && { notifyAt, notifyFired: false })
     });
     saveAlerts();
     if (itemTitle) itemTitle.value = '';
     if (itemDetail) itemDetail.value = '';
     if (itemDate) itemDate.value = '';
     if (itemDays) itemDays.value = '3';
+    const notifyFields = ['notifyDay','notifyMonth','notifyYear','notifyHour','notifyMinute'];
+    notifyFields.forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     updatePriorityPreview();
     updateUrgentBadge();
     updateSidebarSummary();
