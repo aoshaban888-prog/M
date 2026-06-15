@@ -523,16 +523,33 @@ function initManage() {
 
   manageList?.addEventListener('click', e => {
     const renewBtn = e.target.closest('[data-renew]');
+    const confirmBtn = e.target.closest('[data-confirm-renew]');
+    const cancelBtn = e.target.closest('[data-cancel-renew]');
     const deleteBtn = e.target.closest('[data-delete]');
+
     if (renewBtn) {
       const i = Number(renewBtn.dataset.renew);
+      const actions = renewBtn.closest('.manage-actions');
+      actions.innerHTML = `
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+          <input type="date" class="form-input" id="renewDate_${i}" value="${addDays(365)}" style="flex:1;min-width:140px;" />
+          <button class="primary-btn" style="padding:6px 16px;" data-confirm-renew="${i}">تأكيد</button>
+          <button class="ghost-btn" style="padding:6px 12px;" data-cancel-renew="${i}">إلغاء</button>
+        </div>`;
+    }
+    if (confirmBtn) {
+      const i = Number(confirmBtn.dataset.confirmRenew);
+      const newDate = document.getElementById(`renewDate_${i}`)?.value || addDays(365);
       alerts[i].status = 'تم التجديد';
       alerts[i].urgent = false;
       alerts[i].time = 'تم التجديد';
-      alerts[i].expiryDate = addDays(365);
+      alerts[i].expiryDate = newDate;
       saveAlerts();
       updateUrgentBadge();
       updateSidebarSummary();
+      renderManageList();
+    }
+    if (cancelBtn) {
       renderManageList();
     }
     if (deleteBtn) {
