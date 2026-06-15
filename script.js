@@ -602,9 +602,97 @@ function initManage() {
       updateSidebarSummary();
       renderManageList();
     }
-    if (cancelBtn) {
+    if (cancelBtn) renderManageList();
+
+    const editBtn = e.target.closest('[data-edit]');
+    const saveEdit = e.target.closest('[data-save-edit]');
+    const cancelEdit = e.target.closest('[data-cancel-edit]');
+
+    if (editBtn) {
+      const i = Number(editBtn.dataset.edit);
+      const item = alerts[i];
+      const article = editBtn.closest('article');
+      const [eYr, eMo, eDy] = (item.expiryDate || addDays(30)).split('-');
+      let nDays = '', nHr = '', nMn = '';
+      if (item.notifyAt && item.expiryDate) {
+        const diff = Math.round((new Date(item.expiryDate) - new Date(item.notifyAt.split('T')[0])) / 86400000);
+        if (diff > 0) nDays = diff;
+        const tp = item.notifyAt.split('T')[1]?.split(':');
+        nHr = tp?.[0] || ''; nMn = tp?.[1] || '';
+      }
+      const typeOpts = [['records','سجل'],['subscriptions','اشتراك'],['residences','إقامة']]
+        .map(([v,l]) => `<option value="${v}" ${item.type===v?'selected':''}>${l}</option>`).join('');
+      article.innerHTML = `
+        <div class="manage-grid" style="margin-bottom:12px;">
+          <label>الفئة<select id="eType_${i}" class="form-select">${typeOpts}</select></label>
+          <label>العنوان<input id="eTitle_${i}" type="text" class="form-input" value="${item.title.replace(/"/g,'&quot;')}" /></label>
+          <label style="grid-column:1/-1;"><span>الوصف <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
+            <input id="eDetail_${i}" type="text" class="form-input" value="${(item.detail||'').replace(/"/g,'&quot;')}" /></label>
+          <label>تاريخ الانتهاء
+            <div style="display:flex;gap:4px;align-items:center;margin-top:4px;">
+              <input type="number" id="eDy_${i}" value="${parseInt(eDy)}" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يوم"/>
+              <span style="color:var(--muted)">/</span>
+              <input type="number" id="eMo_${i}" value="${parseInt(eMo)}" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شهر"/>
+              <span style="color:var(--muted)">/</span>
+              <input type="number" id="eYr_${i}" value="${eYr}" min="2024" max="2099" class="form-input" style="width:76px;text-align:center;" placeholder="سنة"/>
+            </div>
+          </label>
+          <label>التنبيه قبل الانتهاء بـ
+            <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
+              <input type="number" id="eNDays_${i}" value="${nDays}" min="1" max="365" class="form-input" style="width:80px;text-align:center;" placeholder="أيام"/>
+              <span style="color:var(--muted);font-size:0.85rem;">يوم — الساعة</span>
+              <input type="number" id="eNHr_${i}" value="${nHr}" min="0" max="23" class="form-input" style="width:54px;text-align:center;" placeholder="9"/>
+              <span style="color:var(--muted)">:</span>
+              <input type="number" id="eNMn_${i}" value="${nMn}" min="0" max="59" class="form-input" style="width:54px;text-align:center;" placeholder="00"/>
+            </div>
+          </label>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="primary-btn" style="padding:7px 18px;" data-save-edit="${i}">حفظ التعديلات</button>
+          <button class="ghost-btn" style="padding:7px 14px;" data-cancel-edit="${i}">إلغاء</button>
+        </div>`;
+    }
+
+    if (saveEdit) {
+      const i = Number(saveEdit.dataset.saveEdit);
+      const title = document.getElementById(`eTitle_${i}`)?.value.trim();
+      if (!title) { alert('يرجى ملء العنوان'); return; }
+      const dy = String(document.getElementById(`eDy_${i}`)?.value || 1).padStart(2,'0');
+      const mo = String(document.getElementById(`eMo_${i}`)?.value || 1).padStart(2,'0');
+      const yr = document.getElementById(`eYr_${i}`)?.value || today.getFullYear();
+      const expiryDate = `${yr}-${mo}-${dy}`;
+      const days = getRemainingDays({ expiryDate });
+      const nDaysVal = Number(document.getElementById(`eNDays_${i}`)?.value);
+      let notifyAt = undefined, notifyFired = false;
+      if (nDaysVal > 0) {
+        const nd = new Date(expiryDate);
+        nd.setDate(nd.getDate() - nDaysVal);
+        const nHr = String(document.getElementById(`eNHr_${i}`)?.value || 9).padStart(2,'0');
+        const nMn = String(document.getElementById(`eNMn_${i}`)?.value || 0).padStart(2,'0');
+        notifyAt = `${nd.toISOString().slice(0,10)}T${nHr}:${nMn}`;
+        notifyFired = alerts[i].notifyAt === notifyAt ? (alerts[i].notifyFired || false) : false;
+      }
+      const typeEl = document.getElementById(`eType_${i}`);
+      alerts[i] = {
+        ...alerts[i],
+        type: typeEl?.value || alerts[i].type,
+        label: typeEl?.options[typeEl.selectedIndex]?.text || alerts[i].label,
+        title,
+        detail: document.getElementById(`eDetail_${i}`)?.value.trim() || '',
+        expiryDate,
+        priority: calculatePriority(days),
+        urgent: days <= appSettings.thresholdUrgent,
+        notifyAt: notifyAt || null,
+        notifyFired
+      };
+      saveAlerts();
+      updateUrgentBadge();
+      updateSidebarSummary();
       renderManageList();
     }
+
+    if (cancelEdit) renderManageList();
+
     if (deleteBtn) {
       const i = Number(deleteBtn.dataset.delete);
       if (confirm(`هل تريد حذف "${alerts[i].title}"؟`)) {
