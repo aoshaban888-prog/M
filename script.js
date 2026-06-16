@@ -761,7 +761,7 @@ function initManage() {
       if (nDaysVal > 0) {
         const nd = new Date(newDate);
         nd.setDate(nd.getDate() - nDaysVal);
-        const nHr = String(document.getElementById(`renewNHr_${i}`)?.value || 9).padStart(2,'0');
+        const nHr = String(toH24(document.getElementById(`renewNHr_${i}`)?.value || 9, document.getElementById(`renewNAmPm_${i}`)?.value || 'ص')).padStart(2,'0');
         const nMn = String(document.getElementById(`renewNMn_${i}`)?.value || 0).padStart(2,'0');
         alerts[i].notifyAt = `${nd.toISOString().slice(0,10)}T${nHr}:${nMn}`;
         alerts[i].notifyFired = false;
