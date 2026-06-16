@@ -651,15 +651,12 @@ function initManage() {
     if (priorityHint) priorityHint.textContent = expiry ? `متبقي ${days} يوم — ينتهي ${formatDate(expiry)}` : `متبقي ${days} يوم`;
   }
 
-  ['itemDateD','itemDateM','itemDateY'].forEach(id => {
-    document.getElementById(id)?.addEventListener('input', () => {
-      const expiry = readDateTrio('itemDate');
-      if (expiry && expiry < today.toISOString().slice(0, 10))
-        showToast('التاريخ في الماضي — تأكد من صحة التاريخ', 'warning');
-      updatePriorityPreview();
-    });
+  itemDate?.addEventListener('input', () => {
+    if (itemDate.value && itemDate.value < today.toISOString().slice(0, 10))
+      showToast('التاريخ في الماضي — تأكد من صحة التاريخ', 'warning');
+    updatePriorityPreview();
   });
-  wireDateTrioAdvance('itemDate');
+  itemDate?.addEventListener('change', updatePriorityPreview);
   itemDays?.addEventListener('input', updatePriorityPreview);
   updatePriorityPreview();
 
