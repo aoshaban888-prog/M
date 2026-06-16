@@ -714,8 +714,8 @@ function initManage() {
         const tp = item.notifyAt.split('T')[1]?.split(':');
         nHr = tp?.[0] || ''; nMn = tp?.[1] || '';
       }
-      const typeOpts = [['records','سجل'],['subscriptions','اشتراك'],['residences','إقامة']]
-        .map(([v,l]) => `<option value="${v}" ${item.type===v?'selected':''}>${l}</option>`).join('');
+      const typeOpts = getCategories()
+        .map(c => `<option value="${c.type}" ${item.type===c.type?'selected':''}>${c.label}</option>`).join('');
       article.innerHTML = `
         <div class="manage-grid" style="margin-bottom:12px;">
           <label>الرقم المرجعي<input id="eRef_${i}" type="text" class="form-input" value="${(item.refNumber||'').replace(/"/g,'&quot;')}" placeholder="مثال: 1042" /></label>
