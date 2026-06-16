@@ -139,6 +139,7 @@ function buildAlertCard(item, index, showActions = false) {
         </div>
       </div>
       <strong style="font-size:0.97rem;">${item.title}</strong>
+      ${item.refNumber ? `<div class="alert-meta" style="color:var(--primary-2);font-size:0.82rem;">🔖 #${item.refNumber}</div>` : ''}
       <div class="alert-meta">${item.detail} • ينتهي: ${expiryStr}</div>
       ${actionsHtml}
     </article>`;
