@@ -997,6 +997,53 @@ function initSettings() {
   }
 
   updateInfoPanel();
+
+  function renderCategoryList() {
+    const listEl = document.getElementById('categoryList');
+    if (!listEl) return;
+    const cats = getCategories();
+    listEl.innerHTML = cats.map((c, i) => `
+      <div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:10px 14px;">
+        <span style="display:inline-flex;align-items:center;gap:8px;">${getTypeIcon(c.type)}<strong>${c.label}</strong></span>
+        <button class="action-delete" data-del-cat="${i}" style="padding:4px 10px;font-size:0.8rem;">حذف</button>
+      </div>`).join('') || '<p class="muted" style="font-size:0.9rem;text-align:center;">لا توجد فئات.</p>';
+  }
+
+  document.getElementById('categoryList')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-del-cat]');
+    if (!btn) return;
+    const i = Number(btn.dataset.delCat);
+    const cats = [...getCategories()];
+    if (cats.length <= 1) { showToast('يجب أن تبقى فئة واحدة على الأقل', 'warning'); return; }
+    const removed = cats.splice(i, 1)[0];
+    appSettings.categories = cats;
+    saveSettings();
+    renderCategoryList();
+    populateTypeSelects();
+    showToast(`تم حذف فئة "${removed.label}"`, 'warning');
+  });
+
+  document.getElementById('addCategoryBtn')?.addEventListener('click', () => {
+    const input = document.getElementById('newCategoryInput');
+    const label = input?.value.trim();
+    if (!label) { showToast('أدخل اسم الفئة', 'error'); return; }
+    const cats = [...getCategories()];
+    if (cats.some(c => c.label === label)) { showToast('هذه الفئة موجودة بالفعل', 'warning'); return; }
+    const type = 'cat_' + Date.now().toString(36);
+    cats.push({ type, label });
+    appSettings.categories = cats;
+    saveSettings();
+    if (input) input.value = '';
+    renderCategoryList();
+    populateTypeSelects();
+    showToast(`تمت إضافة فئة "${label}"`, 'success');
+  });
+
+  document.getElementById('newCategoryInput')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('addCategoryBtn')?.click();
+  });
+
+  renderCategoryList();
 }
 
 // ══════════════════════════════════════
