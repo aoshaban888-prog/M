@@ -657,7 +657,6 @@ function initManage() {
   const itemType = document.getElementById('itemType');
   const itemTitle = document.getElementById('itemTitle');
   const itemDetail = document.getElementById('itemDetail');
-  const itemDate = document.getElementById('itemDate');
   const itemDays = document.getElementById('itemDays');
   const itemPriority = document.getElementById('itemPriority');
   const priorityHint = document.getElementById('priorityHint');
