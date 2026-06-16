@@ -847,39 +847,6 @@ function initSettings() {
     URL.revokeObjectURL(url);
   }
 
-  document.getElementById('exportExcelBtn')?.addEventListener('click', () => {
-    const rows = [
-      ['الفئة', 'العنوان', 'الوصف', 'الأولوية', 'الحالة', 'تاريخ/الوقت'],
-      ...alerts.map(item => [item.label, item.title, item.detail, item.priority, item.status, item.time])
-    ];
-    const csv = rows.map(row => row.map(value => `"${String(value).replaceAll('"', '""')}"`).join(',')).join('\n');
-    downloadFile(csv, `alerts-export-${new Date().toISOString().slice(0, 10)}.csv`, 'text/csv;charset=utf-8;');
-    alert('تم تصدير البيانات بصيغة Excel/CSV');
-  });
-
-  document.getElementById('exportPdfBtn')?.addEventListener('click', () => {
-    const html = `
-      <html dir="rtl" lang="ar">
-        <head><meta charset="UTF-8" /><title>تقرير التنبيهات</title></head>
-        <body style="font-family:Tahoma,Arial,sans-serif; padding:20px; color:#111;">
-          <h2 style="text-align:center">تقرير التنبيهات</h2>
-          <p style="text-align:center">تاريخ التصدير: ${new Date().toLocaleDateString('ar-EG')}</p>
-          <table style="width:100%; border-collapse:collapse; font-size:12px;">
-            <thead><tr style="background:#f3f5f9"><th style="border:1px solid #ccc; padding:8px">الفئة</th><th style="border:1px solid #ccc; padding:8px">العنوان</th><th style="border:1px solid #ccc; padding:8px">الوصف</th><th style="border:1px solid #ccc; padding:8px">الأولوية</th><th style="border:1px solid #ccc; padding:8px">الحالة</th></tr></thead>
-            <tbody>${alerts.map(item => `<tr><td style="border:1px solid #ccc; padding:8px">${item.label}</td><td style="border:1px solid #ccc; padding:8px">${item.title}</td><td style="border:1px solid #ccc; padding:8px">${item.detail}</td><td style="border:1px solid #ccc; padding:8px">${item.priority}</td><td style="border:1px solid #ccc; padding:8px">${item.status}</td></tr>`).join('')}</tbody>
-          </table>
-        </body>
-      </html>`;
-    const printWindow = window.open('', '_blank', 'width=900,height=700');
-    if (!printWindow) { alert('يرجى السماح بفتح نافذة جديدة للطباعة'); return; }
-    printWindow.document.write(html);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    alert('تم تجهيز ملف PDF للطباعة');
-  });
-
-
   document.getElementById('exportDataBtn')?.addEventListener('click', () => {
     const blob = new Blob([JSON.stringify({ alerts, settings: appSettings }, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
