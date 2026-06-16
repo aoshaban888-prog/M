@@ -940,10 +940,10 @@ function initSettings() {
           alerts = data.alerts;
           saveAlerts();
           if (data.settings) { appSettings = { ...defaultSettings, ...data.settings }; saveSettings(); }
-          alert(`تم الاستيراد بنجاح! ${alerts.length} عنصر.`);
-          location.reload();
-        } else { alert('الملف غير صالح'); }
-      } catch { alert('خطأ في قراءة الملف'); }
+          showToast(`تم الاستيراد بنجاح — ${alerts.length} عنصر`, 'success');
+          setTimeout(() => location.reload(), 1500);
+        } else { showToast('الملف غير صالح', 'error'); }
+      } catch { showToast('خطأ في قراءة الملف', 'error'); }
     };
     reader.readAsText(file);
   });
