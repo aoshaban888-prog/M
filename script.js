@@ -787,7 +787,7 @@ function initManage() {
         .map(c => `<option value="${c.type}" ${item.type===c.type?'selected':''}>${c.label}</option>`).join('');
       article.innerHTML = `
         <div class="manage-grid" style="margin-bottom:12px;">
-          <label>الرقم المرجعي<input id="eRef_${i}" type="text" class="form-input" value="${(item.refNumber||'').replace(/"/g,'&quot;')}" placeholder="مثال: 1042" /></label>
+          <label>ملاحظة<input id="eRef_${i}" type="text" class="form-input" value="${(item.refNumber||'').replace(/"/g,'&quot;')}" placeholder="اكتب أي ملاحظة..." /></label>
           <label>الفئة<select id="eType_${i}" class="form-select">${typeOpts}</select></label>
           <label style="grid-column:1/-1;">العنوان<input id="eTitle_${i}" type="text" class="form-input" value="${item.title.replace(/"/g,'&quot;')}" /></label>
           <label style="grid-column:1/-1;"><span>الوصف <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
