@@ -922,7 +922,7 @@ function initSettings() {
       </table>
       </body></html>`;
     const w = window.open('', '_blank', 'width=1000,height=700');
-    if (!w) { alert('يرجى السماح بفتح نافذة جديدة'); return; }
+    if (!w) { showToast('يرجى السماح بفتح نوافذ منبثقة', 'warning'); return; }
     w.document.write(html);
     w.document.close();
     w.focus();
