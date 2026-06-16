@@ -880,6 +880,15 @@ function initManage() {
     logActivity('add', title, `الفئة: ${itemType?.options[itemType?.selectedIndex]?.text || ''} — ينتهي: ${expiryDate}`);
   });
 
+  document.getElementById('clearLogBtn')?.addEventListener('click', () => {
+    if (confirm('هل تريد مسح سجل النشاط كاملاً؟')) {
+      activityLog = [];
+      localStorage.setItem(logKey, '[]');
+      renderActivityLog();
+      showToast('تم مسح السجل', 'warning');
+    }
+  });
+
   renderActivityLog();
   renderManageList();
 }
