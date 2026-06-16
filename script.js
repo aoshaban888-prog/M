@@ -877,8 +877,10 @@ function initManage() {
     updateSidebarSummary();
     renderManageList();
     showToast('تمت إضافة العنصر بنجاح', 'success');
+    logActivity('add', title, `الفئة: ${itemType?.options[itemType?.selectedIndex]?.text || ''} — ينتهي: ${expiryDate}`);
   });
 
+  renderActivityLog();
   renderManageList();
 }
 
