@@ -22,8 +22,46 @@ const defaultAlerts = [
 
 const storageKey = 'alerts-admin-data';
 const settingsKey = 'alerts-admin-settings';
+const logKey = 'alerts-activity-log';
 
 let alerts = [];
+let activityLog = JSON.parse(localStorage.getItem(logKey) || '[]');
+
+function logActivity(action, title, detail = '') {
+  const now = new Date();
+  activityLog.unshift({
+    action,
+    title,
+    detail,
+    ts: now.toISOString(),
+    display: now.toLocaleString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+  });
+  if (activityLog.length > 100) activityLog.length = 100;
+  localStorage.setItem(logKey, JSON.stringify(activityLog));
+  renderActivityLog();
+}
+
+function renderActivityLog() {
+  const el = document.getElementById('activityLogList');
+  if (!el) return;
+  const map = {
+    add:    { label: 'إضافة',  color: 'var(--success)' },
+    edit:   { label: 'تعديل',  color: 'var(--primary)'  },
+    delete: { label: 'حذف',    color: 'var(--danger)'   },
+    renew:  { label: 'تجديد',  color: 'var(--warning)'  },
+  };
+  el.innerHTML = activityLog.length ? activityLog.map(e => {
+    const m = map[e.action] || { label: e.action, color: 'var(--muted)' };
+    return `<div style="display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <span style="background:${m.color}22;color:${m.color};border:1px solid ${m.color}55;border-radius:8px;padding:3px 8px;font-size:0.78rem;font-weight:700;text-align:center;">${m.label}</span>
+      <div>
+        <div style="font-size:0.9rem;font-weight:600;">${e.title}</div>
+        ${e.detail ? `<div style="font-size:0.8rem;color:var(--muted);">${e.detail}</div>` : ''}
+      </div>
+      <span style="font-size:0.78rem;color:var(--muted);white-space:nowrap;">${e.display}</span>
+    </div>`;
+  }).join('') : '<div class="empty-state" style="padding:20px 0;"><p>لا توجد عمليات مسجّلة بعد.</p></div>';
+}
 
 const defaultSettings = {
   notifBrowser: true, notifSound: true, notifDaily: true, notifSms: false,
