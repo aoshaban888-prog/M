@@ -809,9 +809,10 @@ function initManage() {
             <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
               <input type="number" id="eNDays_${i}" value="${nDays}" min="1" max="365" class="form-input" style="width:80px;text-align:center;" placeholder="أيام"/>
               <span style="color:var(--muted);font-size:0.85rem;">يوم — الساعة</span>
-              <input type="number" id="eNHr_${i}" value="${nHr}" min="0" max="23" class="form-input" style="width:54px;text-align:center;" placeholder="9"/>
+              <input type="number" id="eNHr_${i}" value="${nHr}" min="1" max="12" class="form-input" style="width:54px;text-align:center;" placeholder="9"/>
               <span style="color:var(--muted)">:</span>
               <input type="number" id="eNMn_${i}" value="${nMn}" min="0" max="59" class="form-input" style="width:54px;text-align:center;" placeholder="00"/>
+              <select id="eNAmPm_${i}" class="form-select" style="width:58px;padding:4px;text-align:center;"><option value="ص" ${nAmPm==='ص'?'selected':''}>ص</option><option value="م" ${nAmPm==='م'?'selected':''}>م</option></select>
             </div>
           </label>
         </div>
