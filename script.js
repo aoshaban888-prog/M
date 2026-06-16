@@ -717,7 +717,7 @@ function initManage() {
     if (saveEdit) {
       const i = Number(saveEdit.dataset.saveEdit);
       const title = document.getElementById(`eTitle_${i}`)?.value.trim();
-      if (!title) { alert('يرجى ملء العنوان'); return; }
+      if (!title) { showToast('يرجى ملء العنوان', 'error'); return; }
       const expiryDate = document.getElementById(`eDate_${i}`)?.value || alerts[i]?.expiryDate || addDays(30);
       const days = getRemainingDays({ expiryDate });
       const nDaysVal = Number(document.getElementById(`eNDays_${i}`)?.value);
