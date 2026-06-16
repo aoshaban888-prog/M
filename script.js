@@ -828,7 +828,7 @@ function initManage() {
       const i = Number(saveEdit.dataset.saveEdit);
       const title = document.getElementById(`eTitle_${i}`)?.value.trim();
       if (!title) { showToast('يرجى ملء العنوان', 'error'); return; }
-      const expiryDate = readDateTrio(`eDate_${i}`) || alerts[i]?.expiryDate || addDays(30);
+      const expiryDate = document.getElementById(`eDate_${i}`)?.value || alerts[i]?.expiryDate || addDays(30);
       const days = getRemainingDays({ expiryDate });
       const nDaysVal = Number(document.getElementById(`eNDays_${i}`)?.value);
       let notifyAt = undefined, notifyFired = false;
