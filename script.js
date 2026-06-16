@@ -155,6 +155,17 @@ function getDaysLabel(days) {
   return `${days} يوم`;
 }
 
+function toH24(h12, ampm) {
+  const h = Number(h12) || 9;
+  if (ampm === 'م') return h === 12 ? 12 : h + 12;
+  return h === 12 ? 0 : h;
+}
+
+function toH12(h24) {
+  const h = Number(h24);
+  return { h12: h === 0 ? 12 : h > 12 ? h - 12 : h, ampm: h < 12 ? 'ص' : 'م' };
+}
+
 function getCategories() {
   return appSettings.categories?.length ? appSettings.categories : defaultSettings.categories;
 }
