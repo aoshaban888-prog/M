@@ -927,6 +927,13 @@ function initManage() {
     }
   });
 
+  document.getElementById('pasteTitle')?.addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (itemTitle) { itemTitle.value = text.trim(); itemTitle.focus(); showToast('تم اللصق من الحافظة', 'success'); }
+    } catch { showToast('تعذّر الوصول للحافظة — جرّب Ctrl+V مباشرة', 'warning'); }
+  });
+
   renderActivityLog();
   renderManageList();
 }
