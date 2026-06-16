@@ -344,6 +344,35 @@ body.light .summary-item { background: #f0f5ff !important; }
 body.light ::-webkit-scrollbar-thumb { background: #b0c0d8; }
 body.light .toggle-slider { background: rgba(0,0,0,0.12); }
 
+/* ── Light mode: badges & pills ── */
+body.light .badge { background: rgba(37,99,235,0.1); color: #1e40af; border-color: rgba(37,99,235,0.25); }
+body.light .badge.urgent  { background: rgba(220,38,38,0.1);  color: #b91c1c; border-color: rgba(220,38,38,0.3); }
+body.light .badge.success { background: rgba(22,163,74,0.1);  color: #15803d; border-color: rgba(22,163,74,0.3); }
+body.light .badge.warning { background: rgba(217,119,6,0.1);  color: #b45309; border-color: rgba(217,119,6,0.3); }
+
+body.light .days-pill.urgent  { background: rgba(220,38,38,0.1);  color: #b91c1c; border-color: rgba(220,38,38,0.3); }
+body.light .days-pill.warning { background: rgba(217,119,6,0.1);  color: #b45309; border-color: rgba(217,119,6,0.3); }
+body.light .days-pill.ok      { background: rgba(22,163,74,0.1);   color: #15803d; border-color: rgba(22,163,74,0.3); }
+
+/* ── Light mode: priority field ── */
+body.light #itemPriority.priority-low    { background: rgba(22,163,74,0.08);  color: #15803d; border-color: rgba(22,163,74,0.4); }
+body.light #itemPriority.priority-medium { background: rgba(37,99,235,0.08);  color: #1e40af; border-color: rgba(37,99,235,0.4); }
+body.light #itemPriority.priority-high   { background: rgba(217,119,6,0.08);  color: #b45309; border-color: rgba(217,119,6,0.4); }
+body.light #itemPriority.priority-urgent { background: rgba(220,38,38,0.08);  color: #b91c1c; border-color: rgba(220,38,38,0.4); }
+
+/* ── Light mode: action buttons ── */
+body.light .action-renew  { background: rgba(22,163,74,0.12);  color: #15803d; border-color: rgba(22,163,74,0.4); }
+body.light .action-edit   { background: rgba(37,99,235,0.1);   color: #1e40af; border-color: rgba(37,99,235,0.35); }
+body.light .action-delete { background: rgba(220,38,38,0.1);   color: #b91c1c; border-color: rgba(220,38,38,0.35); }
+body.light .action-renew:hover  { background: rgba(22,163,74,0.2); }
+body.light .action-edit:hover   { background: rgba(37,99,235,0.18); }
+body.light .action-delete:hover { background: rgba(220,38,38,0.18); }
+
+/* ── Light mode: manage & alert items ── */
+body.light .alert-item, body.light .manage-item { background: #fff !important; border-color: #d1ddf0 !important; }
+body.light .manage-item .alert-meta { color: #4a5568; }
+body.light .manage-item strong { color: #0d1b2e; }
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
