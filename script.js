@@ -633,13 +633,14 @@ function initManage() {
   const itemType = document.getElementById('itemType');
   const itemTitle = document.getElementById('itemTitle');
   const itemDetail = document.getElementById('itemDetail');
+  const itemDate = document.getElementById('itemDate');
   const itemDays = document.getElementById('itemDays');
   const itemPriority = document.getElementById('itemPriority');
   const priorityHint = document.getElementById('priorityHint');
 
   function updatePriorityPreview() {
     if (!itemPriority) return;
-    const expiry = readDateTrio('itemDate');
+    const expiry = itemDate?.value;
     const days = expiry ? getRemainingDays({ expiryDate: expiry }) : (Number(itemDays?.value) || 0);
     if (itemDays && expiry) itemDays.value = days;
     const priority = days > 0 ? calculatePriority(days) : 'عالي';
