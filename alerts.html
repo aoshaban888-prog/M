@@ -89,13 +89,7 @@
           <input id="itemDetail" type="text" class="form-input" placeholder="مثال: يحتاج تجديد خلال 3 أيام" />
         </label>
         <label>تاريخ التجديد
-          <div style="display:flex;align-items:center;gap:5px;">
-            <input type="number" id="itemDateD" min="1" max="31" class="form-input" style="width:58px;text-align:center;" placeholder="يي" />
-            <span style="color:var(--muted);flex-shrink:0;">/</span>
-            <input type="number" id="itemDateM" min="1" max="12" class="form-input" style="width:58px;text-align:center;" placeholder="شش" />
-            <span style="color:var(--muted);flex-shrink:0;">/</span>
-            <input type="number" id="itemDateY" min="2024" max="2099" class="form-input" style="width:80px;text-align:center;" placeholder="سسسس" />
-          </div>
+          <input type="date" id="itemDate" class="form-input" />
         </label>
         <label>الأيام المتبقية
           <input id="itemDays" type="number" min="0" value="3" class="form-input" readonly />
