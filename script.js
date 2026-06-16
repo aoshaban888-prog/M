@@ -738,7 +738,7 @@ function initManage() {
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
           <label style="margin:0;display:grid;gap:4px;min-width:190px;">
             <span style="color:var(--muted);font-size:0.82rem;">تاريخ التجديد</span>
-            <input type="date" id="renewDate_${i}" value="${currentExpiry}" class="form-input" />
+            <input type="date" id="renewDate_${i}" value="${currentExpiry}" class="form-input" lang="en-GB" />
           </label>
           <div style="display:flex;gap:4px;align-items:center;">
             <span style="color:var(--muted);font-size:0.82rem;">تنبيه قبل</span>
