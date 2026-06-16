@@ -667,6 +667,7 @@ function initManage() {
       updateUrgentBadge();
       updateSidebarSummary();
       renderManageList();
+      showToast('تم تجديد العنصر بنجاح', 'success');
     }
     if (cancelBtn) renderManageList();
 
