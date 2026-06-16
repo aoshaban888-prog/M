@@ -807,6 +807,7 @@ function initManage() {
     updateUrgentBadge();
     updateSidebarSummary();
     renderManageList();
+    showToast('تمت إضافة العنصر بنجاح', 'success');
   });
 
   renderManageList();
