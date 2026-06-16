@@ -497,7 +497,7 @@ function initAlerts() {
     const title = itemTitle?.value.trim();
     const detail = itemDetail?.value.trim();
     if (!title) { showToast('يرجى ملء العنوان', 'error'); return; }
-    const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
+    const expiryDate = readDateTrio('itemDate') || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
     const nDays = Number(document.getElementById('notifyDays')?.value);
@@ -523,7 +523,7 @@ function initAlerts() {
     saveAlerts();
     if (itemTitle) itemTitle.value = '';
     if (itemDetail) itemDetail.value = '';
-    if (itemDate) itemDate.value = '';
+    clearDateTrio('itemDate');
     if (itemDays) itemDays.value = '3';
     if (addAlertForm) addAlertForm.style.display = 'none';
     updateUrgentBadge();
