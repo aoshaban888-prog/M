@@ -947,6 +947,7 @@ async function main() {
   else if (pageId === 'page-manage') initManage();
   else if (pageId === 'page-settings') initSettings();
 
+  addThemeToggle();
   checkNotifications();
   setInterval(checkNotifications, 60000);
 }
