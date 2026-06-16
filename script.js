@@ -770,7 +770,7 @@ function initManage() {
   addAlertBtn?.addEventListener('click', () => {
     const title = itemTitle?.value.trim();
     const detail = itemDetail?.value.trim();
-    if (!title) { alert('يرجى ملء العنوان'); return; }
+    if (!title) { showToast('يرجى ملء العنوان', 'error'); return; }
     const expiryDate = itemDate?.value || addDays(Number(itemDays?.value) || 3);
     const days = getRemainingDays({ expiryDate });
     const priority = calculatePriority(days);
