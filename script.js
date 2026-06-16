@@ -970,48 +970,41 @@ function initManage() {
     }
   });
 
-  function openSmartPaste() {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9998;display:flex;align-items:center;justify-content:center;';
-    overlay.innerHTML = `
-      <div style="background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;width:360px;max-width:94vw;box-shadow:0 8px 40px rgba(0,0,0,0.4);">
-        <p style="font-weight:700;margin-bottom:6px;font-size:1rem;">لصق من Excel أو أي مصدر</p>
-        <p style="color:var(--muted);font-size:0.83rem;margin-bottom:12px;">الصق (Ctrl+V) هنا — إذا كان صفاً من Excel سيتوزع تلقائياً</p>
-        <textarea id="_spArea" style="width:100%;height:80px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:9px;font-family:inherit;resize:none;box-sizing:border-box;font-size:0.95rem;" placeholder="الصق هنا..."></textarea>
-        <div style="display:flex;gap:8px;margin-top:12px;">
-          <button class="primary-btn" id="_spOk" style="flex:1;">تأكيد</button>
-          <button class="ghost-btn" id="_spCancel" style="flex:1;">إلغاء</button>
-        </div>
-      </div>`;
-    document.body.appendChild(overlay);
-    const ta = document.getElementById('_spArea');
-    setTimeout(() => ta?.focus(), 60);
-
-    function applyPaste() {
-      const raw = ta?.value || '';
-      if (!raw.trim()) { overlay.remove(); return; }
-      const parts = raw.trim().split('\n')[0].split('\t').map(s => s.trim());
-      if (itemTitle)  itemTitle.value  = parts[0] || '';
-      if (itemDetail) itemDetail.value = parts[1] || '';
-      if (parts[2] && document.getElementById('itemDate')) {
-        const d = parts[2];
-        const dmy = d.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
-        const ymd = d.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
-        if (dmy) document.getElementById('itemDate').value = `${dmy[3]}-${dmy[2].padStart(2,'0')}-${dmy[1].padStart(2,'0')}`;
-        else if (ymd) document.getElementById('itemDate').value = `${ymd[1]}-${ymd[2].padStart(2,'0')}-${ymd[3].padStart(2,'0')}`;
+  function applySmartPaste(raw) {
+    if (!raw?.trim()) return;
+    const parts = raw.trim().split('\n')[0].split('\t').map(s => s.trim());
+    if (itemTitle)  itemTitle.value  = parts[0] || '';
+    if (itemDetail) itemDetail.value = parts[1] || '';
+    if (parts[2]) {
+      const d = parts[2];
+      const dmy = d.match(/^(\d{1,2})[\/\-\.](\d{1,2})[\/\-\.](\d{4})$/);
+      const ymd = d.match(/^(\d{4})[\/\-\.](\d{1,2})[\/\-\.](\d{1,2})$/);
+      const dateEl = document.getElementById('itemDate');
+      if (dateEl) {
+        if (dmy) dateEl.value = `${dmy[3]}-${dmy[2].padStart(2,'0')}-${dmy[1].padStart(2,'0')}`;
+        else if (ymd) dateEl.value = `${ymd[1]}-${ymd[2].padStart(2,'0')}-${ymd[3].padStart(2,'0')}`;
       }
-      updatePriorityPreview();
-      showToast(parts.length > 1 ? 'تم لصق البيانات من Excel' : 'تم اللصق', 'success');
-      overlay.remove();
     }
-
-    document.getElementById('_spOk')?.addEventListener('click', applyPaste);
-    document.getElementById('_spCancel')?.addEventListener('click', () => overlay.remove());
-    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
-    ta?.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.remove(); });
+    updatePriorityPreview();
+    showToast(parts.length > 1 ? 'تم لصق البيانات من Excel' : 'تم اللصق', 'success');
   }
 
-  document.getElementById('pasteTitle')?.addEventListener('click', openSmartPaste);
+  document.getElementById('pasteTitle')?.addEventListener('click', async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      applySmartPaste(text);
+    } catch {
+      showToast('اضغط في حقل العنوان ثم Ctrl+V مباشرة', 'warning');
+    }
+  });
+
+  itemTitle?.addEventListener('paste', e => {
+    const text = (e.clipboardData || window.clipboardData).getData('text');
+    if (text.includes('\t')) {
+      e.preventDefault();
+      applySmartPaste(text);
+    }
+  });
 
   renderActivityLog();
   renderManageList();
