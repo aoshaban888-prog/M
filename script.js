@@ -817,6 +817,7 @@ function initManage() {
       updateSidebarSummary();
       renderManageList();
       showToast('تم حفظ التعديلات', 'success');
+      logActivity('edit', alerts[i].title, `الفئة: ${alerts[i].label} — ينتهي: ${alerts[i].expiryDate}`);
     }
 
     if (cancelEdit) renderManageList();
