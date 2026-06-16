@@ -727,12 +727,12 @@ function initManage() {
       const i = Number(renewBtn.dataset.renew);
       const actions = renewBtn.closest('.manage-actions');
       const currentExpiry = alerts[i].expiryDate || addDays(365);
-      let exNDays = '', exNHr = '', exNMn = '';
+      let exNDays = '', exNHr = '', exNMn = '', exNAmPm = 'ص';
       if (alerts[i].notifyAt && alerts[i].expiryDate) {
         const diff = Math.round((new Date(alerts[i].expiryDate) - new Date(alerts[i].notifyAt.split('T')[0])) / 86400000);
         if (diff > 0) exNDays = diff;
         const tp = alerts[i].notifyAt.split('T')[1]?.split(':');
-        exNHr = tp?.[0] || ''; exNMn = tp?.[1] || '';
+        if (tp) { const r = toH12(tp[0]); exNHr = r.h12; exNAmPm = r.ampm; exNMn = tp[1] || ''; }
       }
       actions.innerHTML = `
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
@@ -744,9 +744,10 @@ function initManage() {
             <span style="color:var(--muted);font-size:0.82rem;">تنبيه قبل</span>
             <input type="number" id="renewNDays_${i}" value="${exNDays}" min="1" max="365" class="form-input" style="width:65px;text-align:center;" placeholder="أيام"/>
             <span style="color:var(--muted);font-size:0.82rem;">يوم الساعة</span>
-            <input type="number" id="renewNHr_${i}" value="${exNHr}" min="0" max="23" class="form-input" style="width:54px;text-align:center;" placeholder="9"/>
+            <input type="number" id="renewNHr_${i}" value="${exNHr}" min="1" max="12" class="form-input" style="width:54px;text-align:center;" placeholder="9"/>
             <span style="color:var(--muted)">:</span>
             <input type="number" id="renewNMn_${i}" value="${exNMn}" min="0" max="59" class="form-input" style="width:54px;text-align:center;" placeholder="00"/>
+            <select id="renewNAmPm_${i}" class="form-select" style="width:58px;padding:4px;text-align:center;"><option value="ص" ${exNAmPm==='ص'?'selected':''}>ص</option><option value="م" ${exNAmPm==='م'?'selected':''}>م</option></select>
           </div>
           <button class="primary-btn" style="padding:6px 16px;" data-confirm-renew="${i}">تأكيد</button>
           <button class="ghost-btn" style="padding:6px 12px;" data-cancel-renew="${i}">إلغاء</button>
