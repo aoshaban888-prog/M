@@ -805,7 +805,7 @@ function initManage() {
           <label style="grid-column:1/-1;"><span>الوصف <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
             <input id="eDetail_${i}" type="text" class="form-input" value="${(item.detail||'').replace(/"/g,'&quot;')}" /></label>
           <label>تاريخ الانتهاء
-            ${(() => { const [ey,em,ed] = (item.expiryDate || addDays(30)).split('-'); return `<div style="display:flex;align-items:center;gap:4px;"><input type="number" id="eDate_${i}D" value="${parseInt(ed,10)||''}" min="1" max="31" class="form-input" style="width:54px;text-align:center;" placeholder="يي"/><span style="color:var(--muted);">/</span><input type="number" id="eDate_${i}M" value="${parseInt(em,10)||''}" min="1" max="12" class="form-input" style="width:54px;text-align:center;" placeholder="شش"/><span style="color:var(--muted);">/</span><input type="number" id="eDate_${i}Y" value="${ey||''}" min="2024" max="2099" class="form-input" style="width:72px;text-align:center;" placeholder="سسسس"/></div>`; })()}
+            <input type="date" id="eDate_${i}" value="${item.expiryDate || addDays(30)}" class="form-input" />
           </label>
           <label>التنبيه قبل الانتهاء بـ
             <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
