@@ -788,10 +788,9 @@ function initManage() {
           <button class="ghost-btn" style="padding:6px 12px;" data-cancel-renew="${i}">إلغاء</button>
         </div>`;
     }
-    const currentExpiry = alerts[Number(confirmBtn?.dataset.confirmRenew || -1)]?.expiryDate || addDays(365);
     if (confirmBtn) {
       const i = Number(confirmBtn.dataset.confirmRenew);
-      const newDate = document.getElementById(`renewDate_${i}`)?.value || currentExpiry;
+      const newDate = readDateTrio(`renewDate_${i}`) || alerts[i]?.expiryDate || addDays(365);
       const nDaysVal = Number(document.getElementById(`renewNDays_${i}`)?.value);
       if (nDaysVal > 0) {
         const nd = new Date(newDate);
