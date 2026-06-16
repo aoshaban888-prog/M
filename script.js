@@ -308,7 +308,11 @@ function initAlerts() {
     if (priorityHint) priorityHint.textContent = expiry ? `متبقي ${days} يوم — ${formatDate(expiry)}` : `متبقي ${days} يوم`;
   }
 
-  itemDate?.addEventListener('input', updatePriorityPreview);
+  itemDate?.addEventListener('input', () => {
+    if (itemDate.value && itemDate.value < today.toISOString().slice(0, 10))
+      showToast('التاريخ في الماضي — تأكد من صحة التاريخ', 'warning');
+    updatePriorityPreview();
+  });
   itemDays?.addEventListener('input', updatePriorityPreview);
   updatePriorityPreview();
 
