@@ -803,7 +803,7 @@ function initManage() {
           <label style="grid-column:1/-1;"><span>الوصف <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
             <input id="eDetail_${i}" type="text" class="form-input" value="${(item.detail||'').replace(/"/g,'&quot;')}" /></label>
           <label>تاريخ الانتهاء
-            <input type="date" id="eDate_${i}" value="${item.expiryDate || addDays(30)}" class="form-input" />
+            <input type="date" id="eDate_${i}" value="${item.expiryDate || addDays(30)}" class="form-input" lang="en-GB" />
           </label>
           <label>التنبيه قبل الانتهاء بـ
             <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px;">
