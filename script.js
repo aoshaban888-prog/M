@@ -787,12 +787,12 @@ function initManage() {
       const i = Number(editBtn.dataset.edit);
       const item = alerts[i];
       const article = editBtn.closest('article');
-      let nDays = '', nHr = '', nMn = '';
+      let nDays = '', nHr = '', nMn = '', nAmPm = 'ص';
       if (item.notifyAt && item.expiryDate) {
         const diff = Math.round((new Date(item.expiryDate) - new Date(item.notifyAt.split('T')[0])) / 86400000);
         if (diff > 0) nDays = diff;
         const tp = item.notifyAt.split('T')[1]?.split(':');
-        nHr = tp?.[0] || ''; nMn = tp?.[1] || '';
+        if (tp) { const r = toH12(tp[0]); nHr = r.h12; nAmPm = r.ampm; nMn = tp[1] || ''; }
       }
       const typeOpts = getCategories()
         .map(c => `<option value="${c.type}" ${item.type===c.type?'selected':''}>${c.label}</option>`).join('');
