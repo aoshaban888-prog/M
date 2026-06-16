@@ -256,9 +256,39 @@ function updateSidebarSummary() {
 //  PAGE: DASHBOARD
 // ══════════════════════════════════════
 
+function startClock() {
+  const timeEl  = document.getElementById('clockTime');
+  const dayEl   = document.getElementById('clockDay');
+  const gregEl  = document.getElementById('gregDate');
+  const hijriEl = document.getElementById('hijriDate');
+  if (!timeEl) return;
+
+  function tick() {
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    timeEl.textContent = `${hh}:${mm}:${ss}`;
+    if (dayEl) dayEl.textContent = now.toLocaleDateString('ar-EG', { weekday: 'long' });
+    if (gregEl) gregEl.textContent = now.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long', year: 'numeric' });
+    if (hijriEl) {
+      try {
+        hijriEl.textContent = new Intl.DateTimeFormat('ar', {
+          calendar: 'islamic-umalqura',
+          day: 'numeric', month: 'long', year: 'numeric'
+        }).format(now);
+      } catch { hijriEl.textContent = '—'; }
+    }
+  }
+
+  tick();
+  setInterval(tick, 1000);
+}
+
 function initDashboard() {
   const dateEl = document.getElementById('todayDate');
   if (dateEl) dateEl.textContent = today.toLocaleDateString('ar-EG', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  startClock();
 
   const critical = alerts.filter(a => getRemainingDays(a) <= appSettings.thresholdUrgent).length;
   const records = alerts.filter(a => a.type === 'records').length;
