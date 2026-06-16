@@ -749,6 +749,7 @@ function initManage() {
       updateUrgentBadge();
       updateSidebarSummary();
       renderManageList();
+      showToast('تم حفظ التعديلات', 'success');
     }
 
     if (cancelEdit) renderManageList();
@@ -761,6 +762,7 @@ function initManage() {
         updateUrgentBadge();
         updateSidebarSummary();
         renderManageList();
+        showToast('تم حذف العنصر', 'warning');
       }
     }
   });
