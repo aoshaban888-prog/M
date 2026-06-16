@@ -663,7 +663,7 @@ function initManage() {
 
   function updatePriorityPreview() {
     if (!itemPriority) return;
-    const expiry = itemDate?.value;
+    const expiry = readDateTrio('itemDate');
     const days = expiry ? getRemainingDays({ expiryDate: expiry }) : (Number(itemDays?.value) || 0);
     if (itemDays && expiry) itemDays.value = days;
     const priority = days > 0 ? calculatePriority(days) : 'عالي';
