@@ -675,7 +675,7 @@ function initManage() {
           const badgeCls = getPriorityBadgeClass(item.priority);
           return `<article class="manage-item">
             <div class="manage-item-top">
-              <strong style="display:inline-flex;align-items:center;gap:6px;">${getTypeIcon(item.type)}${item.title}${item.refNumber ? `<span style="font-size:0.78rem;font-weight:400;color:var(--muted);background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:8px;padding:2px 8px;">${item.refNumber}</span>` : ''}</strong>
+              <strong style="display:inline-flex;align-items:center;gap:6px;">${getTypeIcon(item.type)}${item.title}</strong>
               <div style="display:flex;gap:6px;flex-wrap:wrap;">
                 <span class="badge">${item.label}</span>
                 <span class="badge ${badgeCls}">${item.priority}</span>
