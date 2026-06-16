@@ -123,6 +123,22 @@
             <h3>كل العناصر <span class="badge" id="manageCount">0</span></h3>
           </div>
         </div>
+        <div style="margin-bottom:12px;">
+          <input type="search" id="manageSearch" class="form-input" placeholder="بحث بالعنوان أو الرقم المرجعي..." style="width:100%;margin-bottom:8px;" />
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+            <div class="chip-row" id="manageFilterChips" style="flex:1;margin:0;">
+              <button class="chip active" data-mfilter="all">الكل</button>
+              <button class="chip" data-mfilter="records">سجلات</button>
+              <button class="chip" data-mfilter="subscriptions">اشتراكات</button>
+              <button class="chip" data-mfilter="residences">إقامات</button>
+            </div>
+            <select id="manageSort" class="form-select" style="width:auto;font-size:0.85rem;padding:6px 10px;">
+              <option value="expiry">الأقرب انتهاءً</option>
+              <option value="priority">الأعلى أولوية</option>
+              <option value="newest">الأحدث إضافةً</option>
+            </select>
+          </div>
+        </div>
         <div class="manage-list" id="manageList"></div>
       </article>
     </div>
