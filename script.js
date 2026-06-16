@@ -825,10 +825,6 @@ function initManage() {
     if (deleteBtn) {
       const i = Number(deleteBtn.dataset.delete);
       if (confirm(`هل تريد حذف "${alerts[i].title}"؟`)) {
-        alerts.splice(i, 1);
-        saveAlerts();
-        updateUrgentBadge();
-        updateSidebarSummary();
         logActivity('delete', alerts[i].title, `الفئة: ${alerts[i].label}`);
         alerts.splice(i, 1);
         saveAlerts();
