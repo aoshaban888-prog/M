@@ -543,11 +543,29 @@ function initManage() {
   itemDays?.addEventListener('input', updatePriorityPreview);
   updatePriorityPreview();
 
+  let manageFilter = 'all';
+  let manageQuery = '';
+  let manageSort = 'expiry';
+
   function renderManageList() {
     if (!manageList) return;
-    if (manageCount) manageCount.textContent = alerts.length;
-    manageList.innerHTML = alerts.length
-      ? alerts.map((item, i) => {
+    const priorityOrder = { 'عالي': 0, 'حرج': 1, 'متوسط': 2, 'منخفض': 3 };
+    let list = alerts
+      .map((item, i) => ({ item, i }))
+      .filter(({ item }) => {
+        const matchType = manageFilter === 'all' || item.type === manageFilter;
+        const q = manageQuery.toLowerCase();
+        const matchQ = !q || item.title?.toLowerCase().includes(q) || item.refNumber?.toLowerCase().includes(q) || item.detail?.toLowerCase().includes(q);
+        return matchType && matchQ;
+      })
+      .sort((a, b) => {
+        if (manageSort === 'expiry') return getRemainingDays(a.item) - getRemainingDays(b.item);
+        if (manageSort === 'priority') return (priorityOrder[a.item.priority] ?? 4) - (priorityOrder[b.item.priority] ?? 4);
+        return b.i - a.i;
+      });
+    if (manageCount) manageCount.textContent = list.length;
+    manageList.innerHTML = list.length
+      ? list.map(({ item, i }) => {
           const days = getRemainingDays(item);
           const pillCls = getDaysPillClass(days);
           const badgeCls = getPriorityBadgeClass(item.priority);
@@ -557,7 +575,7 @@ function initManage() {
               <div style="display:flex;gap:6px;flex-wrap:wrap;">
                 <span class="badge">${item.label}</span>
                 <span class="badge ${badgeCls}">${item.priority}</span>
-                <span class="days-pill ${pillCls}">${days} يوم</span>
+                <span class="days-pill ${pillCls}">${getDaysLabel(days)}</span>
               </div>
             </div>
             <div class="alert-meta">${item.detail}</div>
@@ -570,8 +588,19 @@ function initManage() {
             </div>
           </article>`;
         }).join('')
-      : '<div class="empty-state"><p>لا توجد عناصر محفوظة. أضف عنصراً جديداً.</p></div>';
+      : '<div class="empty-state"><p>لا توجد عناصر تطابق البحث.</p></div>';
   }
+
+  document.getElementById('manageSearch')?.addEventListener('input', e => { manageQuery = e.target.value.trim(); renderManageList(); });
+  document.getElementById('manageSort')?.addEventListener('change', e => { manageSort = e.target.value; renderManageList(); });
+  document.getElementById('manageFilterChips')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-mfilter]');
+    if (!btn) return;
+    manageFilter = btn.dataset.mfilter;
+    document.querySelectorAll('[data-mfilter]').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    renderManageList();
+  });
 
   manageList?.addEventListener('click', e => {
     const renewBtn = e.target.closest('[data-renew]');
