@@ -184,6 +184,8 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
   transition: border-color 0.2s;
 }
 .manage-grid input:focus, .manage-grid select:focus, .form-input:focus, .form-select:focus { outline: none; border-color: var(--primary); }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1) brightness(1.8); cursor: pointer; opacity: 0.8; }
+input[type="date"]::-webkit-calendar-picker-indicator:hover { opacity: 1; }
 .manage-grid input[readonly], .form-input[readonly] { opacity: 0.6; cursor: default; }
 #itemPriority.priority-low { background: rgba(81,211,155,0.1); color: #caffec; border-color: rgba(81,211,155,0.4); }
 #itemPriority.priority-medium { background: rgba(94,168,255,0.1); color: #dff7ff; border-color: rgba(94,168,255,0.4); }
