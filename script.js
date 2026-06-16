@@ -969,7 +969,7 @@ function initSettings() {
   });
 
   document.getElementById('exportCsvBtn')?.addEventListener('click', () => {
-    const headers = ['الرقم المرجعي','النوع','العنوان','الوصف','تاريخ الانتهاء','الأيام المتبقية','الأولوية','الحالة','وقت التنبيه'];
+    const headers = ['ملاحظة','النوع','العنوان','الوصف','تاريخ الانتهاء','الأيام المتبقية','الأولوية','الحالة','وقت التنبيه'];
     const rows = alerts.map(item => [
       item.refNumber || '',
       item.label || '',
