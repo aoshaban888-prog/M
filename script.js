@@ -656,7 +656,7 @@ function initManage() {
       .filter(({ item }) => {
         const matchType = manageFilter === 'all' || item.type === manageFilter;
         const q = manageQuery.toLowerCase();
-        const matchQ = !q || item.title?.toLowerCase().includes(q) || item.refNumber?.toLowerCase().includes(q) || item.detail?.toLowerCase().includes(q);
+        const matchQ = !q || item.title?.toLowerCase().includes(q) || item.detail?.toLowerCase().includes(q);
         return matchType && matchQ;
       })
       .sort((a, b) => {
