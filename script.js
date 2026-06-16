@@ -736,18 +736,11 @@ function initManage() {
         const tp = alerts[i].notifyAt.split('T')[1]?.split(':');
         if (tp) { const r = toH12(tp[0]); exNHr = r.h12; exNAmPm = r.ampm; exNMn = tp[1] || ''; }
       }
-      const [reY,reM,reD] = currentExpiry.split('-');
       actions.innerHTML = `
         <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px;">
-          <label style="margin:0;display:grid;gap:4px;">
+          <label style="margin:0;display:grid;gap:4px;min-width:190px;">
             <span style="color:var(--muted);font-size:0.82rem;">تاريخ التجديد</span>
-            <div style="display:flex;align-items:center;gap:4px;">
-              <input type="number" id="renewDate_${i}D" value="${parseInt(reD,10)||''}" min="1" max="31" class="form-input" style="width:54px;text-align:center;" placeholder="يي"/>
-              <span style="color:var(--muted);">/</span>
-              <input type="number" id="renewDate_${i}M" value="${parseInt(reM,10)||''}" min="1" max="12" class="form-input" style="width:54px;text-align:center;" placeholder="شش"/>
-              <span style="color:var(--muted);">/</span>
-              <input type="number" id="renewDate_${i}Y" value="${reY||''}" min="2024" max="2099" class="form-input" style="width:72px;text-align:center;" placeholder="سسسس"/>
-            </div>
+            <input type="date" id="renewDate_${i}" value="${currentExpiry}" class="form-input" />
           </label>
           <div style="display:flex;gap:4px;align-items:center;">
             <span style="color:var(--muted);font-size:0.82rem;">تنبيه قبل</span>
