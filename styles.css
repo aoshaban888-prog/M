@@ -241,6 +241,45 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
 .section-title h3 { font-size: 1rem; }
 .section-title .badge { font-size: 0.8rem; }
 
+/* ── Light Mode ── */
+body.light {
+  --bg: #eef2f8;
+  --panel: #ffffff;
+  --panel-2: #f4f7fc;
+  --border: #c8d5e8;
+  --muted: #5a6a80;
+  --text: #0d1b2e;
+  --primary: #2563eb;
+  --primary-2: #1d4ed8;
+  --danger: #dc2626;
+  --success: #16a34a;
+  --warning: #d97706;
+}
+body.light { background: linear-gradient(135deg, #dde8f5, #edf3ff 55%, #dde8f8) !important; }
+body.light .sidebar { background: rgba(230,238,252,0.98) !important; border-color: #bfcfe8; }
+body.light .panel, body.light .stat-card { background: rgba(255,255,255,0.97) !important; }
+body.light .alert-item, body.light .manage-item { background: #f7faff !important; }
+body.light .mini-card { background: rgba(220,233,252,0.6) !important; }
+body.light .nav-link:hover { background: rgba(37,99,235,0.08) !important; }
+body.light .nav-link.active { background: linear-gradient(135deg,rgba(37,99,235,0.15),rgba(29,78,216,0.08)) !important; color: #1e3a8a !important; border-color: rgba(37,99,235,0.3) !important; }
+body.light .nav-link.active .nav-icon { opacity: 1; }
+body.light .form-input, body.light .form-select, body.light .manage-grid input, body.light .manage-grid select { background: #fff !important; color: var(--text) !important; border-color: var(--border) !important; }
+body.light #searchBox { background: #fff !important; color: var(--text) !important; }
+body.light .chip { background: rgba(0,0,0,0.05) !important; color: var(--muted) !important; }
+body.light .chip.active { background: linear-gradient(135deg,rgba(37,99,235,0.15),rgba(29,78,216,0.08)) !important; color: #1e3a8a !important; border-color: rgba(37,99,235,0.3) !important; }
+body.light .ghost-btn { background: rgba(0,0,0,0.06) !important; color: var(--text) !important; border-color: var(--border) !important; }
+body.light .ghost-btn:hover { background: rgba(0,0,0,0.1) !important; }
+body.light .settings-section { background: #f4f7fc !important; }
+body.light .cal-cell.today { background: rgba(37,99,235,0.12) !important; }
+body.light .cal-cell.has-items:not(.today) { background: rgba(37,99,235,0.06) !important; }
+body.light .cal-cell.has-urgent { background: rgba(220,38,38,0.07) !important; }
+body.light .cal-nav-btn { background: rgba(0,0,0,0.06) !important; color: var(--text) !important; }
+body.light .number-input { background: #fff !important; color: var(--text) !important; }
+body.light .expiry-banner { background: linear-gradient(135deg,rgba(220,38,38,0.08),rgba(255,255,255,0.95)) !important; }
+body.light .summary-item { background: #f0f5ff !important; }
+body.light ::-webkit-scrollbar-thumb { background: #b0c0d8; }
+body.light .toggle-slider { background: rgba(0,0,0,0.12); }
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
