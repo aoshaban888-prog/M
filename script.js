@@ -425,14 +425,13 @@ function initAlerts() {
   const itemType = document.getElementById('itemType');
   const itemTitle = document.getElementById('itemTitle');
   const itemDetail = document.getElementById('itemDetail');
-  const itemDate = document.getElementById('itemDate');
   const itemDays = document.getElementById('itemDays');
   const itemPriority = document.getElementById('itemPriority');
   const priorityHint = document.getElementById('priorityHint');
 
   function updatePriorityPreview() {
     if (!itemPriority) return;
-    const expiry = itemDate?.value;
+    const expiry = readDateTrio('itemDate');
     const days = expiry ? getRemainingDays({ expiryDate: expiry }) : (Number(itemDays?.value) || 0);
     if (itemDays && expiry) itemDays.value = days;
     const priority = days > 0 ? calculatePriority(days) : 'عالي';
@@ -443,11 +442,12 @@ function initAlerts() {
     if (priorityHint) priorityHint.textContent = expiry ? `متبقي ${days} يوم — ${formatDate(expiry)}` : `متبقي ${days} يوم`;
   }
 
-  itemDate?.addEventListener('input', () => {
-    if (itemDate.value && itemDate.value < today.toISOString().slice(0, 10))
-      showToast('التاريخ في الماضي — تأكد من صحة التاريخ', 'warning');
+  ['itemDateD','itemDateM','itemDateY'].forEach(id => document.getElementById(id)?.addEventListener('input', () => {
+    const expiry = readDateTrio('itemDate');
+    if (expiry && expiry < today.toISOString().slice(0,10)) showToast('التاريخ في الماضي — تأكد من صحة التاريخ', 'warning');
     updatePriorityPreview();
-  });
+  }));
+  wireDateTrioAdvance('itemDate');
   itemDays?.addEventListener('input', updatePriorityPreview);
   updatePriorityPreview();
 
