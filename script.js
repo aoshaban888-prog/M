@@ -913,7 +913,7 @@ function initManage() {
     saveAlerts();
     if (itemTitle) itemTitle.value = '';
     if (itemDetail) itemDetail.value = '';
-    clearDateTrio('itemDate');
+    if (itemDate) itemDate.value = '';
     if (itemDays) itemDays.value = '3';
     ['notifyDays','notifyHour','notifyMinute'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
     updatePriorityPreview();
