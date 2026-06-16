@@ -241,6 +241,15 @@ button, .btn { cursor: pointer; border: none; border-radius: 12px; font-family: 
 .section-title h3 { font-size: 1rem; }
 .section-title .badge { font-size: 0.8rem; }
 
+/* ── Toast Notifications ── */
+.toast-container { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none; }
+.toast { background:var(--panel); color:var(--text); border:1px solid var(--border); border-radius:12px; padding:10px 22px; font-size:0.9rem; font-family:inherit; box-shadow:0 4px 24px rgba(0,0,0,0.3); display:flex; align-items:center; gap:8px; animation:toastIn 0.3s ease, toastOut 0.4s ease 2.6s forwards; pointer-events:auto; max-width:400px; text-align:center; }
+.toast.success { border-color:var(--success); }
+.toast.error { border-color:var(--danger); }
+.toast.warning { border-color:var(--warning); }
+@keyframes toastIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+@keyframes toastOut { to{opacity:0;transform:translateY(-8px)} }
+
 /* ── Light Mode ── */
 body.light {
   --bg: #eef2f8;
