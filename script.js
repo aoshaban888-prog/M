@@ -989,7 +989,6 @@ function initSettings() {
       const days = getRemainingDays(item);
       const color = days <= 7 ? '#e53935' : days <= 30 ? '#f59e0b' : '#22c55e';
       return `<tr>
-        <td>${item.refNumber || '—'}</td>
         <td>${item.label || ''}</td>
         <td>${item.title || ''}</td>
         <td>${item.detail || '—'}</td>
