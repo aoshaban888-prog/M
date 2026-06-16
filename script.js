@@ -155,31 +155,6 @@ function getDaysLabel(days) {
   return `${days} يوم`;
 }
 
-function readDateTrio(prefix) {
-  const d = document.getElementById(prefix + 'D')?.value;
-  const m = document.getElementById(prefix + 'M')?.value;
-  const y = document.getElementById(prefix + 'Y')?.value;
-  if (d && m && y && String(y).length === 4)
-    return `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-  return '';
-}
-function fillDateTrio(prefix, dateStr) {
-  if (!dateStr) return;
-  const [y, m, d] = dateStr.split('-');
-  const el = s => document.getElementById(prefix + s);
-  if (el('D')) el('D').value = parseInt(d, 10);
-  if (el('M')) el('M').value = parseInt(m, 10);
-  if (el('Y')) el('Y').value = y;
-}
-function clearDateTrio(prefix) {
-  ['D','M','Y'].forEach(s => { const el = document.getElementById(prefix + s); if (el) el.value = ''; });
-}
-function wireDateTrioAdvance(prefix) {
-  const dEl = document.getElementById(prefix + 'D');
-  const mEl = document.getElementById(prefix + 'M');
-  if (dEl) dEl.addEventListener('input', () => { if (String(dEl.value).length === 2) mEl?.focus(); });
-  if (mEl) mEl.addEventListener('input', () => { if (String(mEl.value).length === 2) document.getElementById(prefix + 'Y')?.focus(); });
-}
 
 function toH24(h12, ampm) {
   const h = Number(h12) || 9;
