@@ -480,7 +480,7 @@ function initAlerts() {
       const notifyDate = new Date(expiryDate);
       notifyDate.setDate(notifyDate.getDate() - nDays);
       const nd = notifyDate.toISOString().slice(0, 10);
-      const nHr = String(document.getElementById('notifyHour')?.value || 9).padStart(2, '0');
+      const nHr = String(toH24(document.getElementById('notifyHour')?.value || 9, document.getElementById('notifyAmPm')?.value || 'ص')).padStart(2, '0');
       const nMn = String(document.getElementById('notifyMinute')?.value || 0).padStart(2, '0');
       notifyAt = `${nd}T${nHr}:${nMn}`;
     }
@@ -888,7 +888,7 @@ function initManage() {
       const notifyDate = new Date(expiryDate);
       notifyDate.setDate(notifyDate.getDate() - nDays);
       const nd = notifyDate.toISOString().slice(0, 10);
-      const nHr = String(document.getElementById('notifyHour')?.value || 9).padStart(2, '0');
+      const nHr = String(toH24(document.getElementById('notifyHour')?.value || 9, document.getElementById('notifyAmPm')?.value || 'ص')).padStart(2, '0');
       const nMn = String(document.getElementById('notifyMinute')?.value || 0).padStart(2, '0');
       notifyAt = `${nd}T${nHr}:${nMn}`;
     }
