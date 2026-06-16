@@ -833,7 +833,7 @@ function initManage() {
       if (nDaysVal > 0) {
         const nd = new Date(expiryDate);
         nd.setDate(nd.getDate() - nDaysVal);
-        const nHr = String(document.getElementById(`eNHr_${i}`)?.value || 9).padStart(2,'0');
+        const nHr = String(toH24(document.getElementById(`eNHr_${i}`)?.value || 9, document.getElementById(`eNAmPm_${i}`)?.value || 'ص')).padStart(2,'0');
         const nMn = String(document.getElementById(`eNMn_${i}`)?.value || 0).padStart(2,'0');
         notifyAt = `${nd.toISOString().slice(0,10)}T${nHr}:${nMn}`;
         notifyFired = alerts[i].notifyAt === notifyAt ? (alerts[i].notifyFired || false) : false;
