@@ -823,13 +823,11 @@ function initManage() {
         notifyFired = alerts[i].notifyAt === notifyAt ? (alerts[i].notifyFired || false) : false;
       }
       const typeEl = document.getElementById(`eType_${i}`);
-      const newRef = document.getElementById(`eRef_${i}`)?.value.trim();
       alerts[i] = {
         ...alerts[i],
         type: typeEl?.value || alerts[i].type,
         label: typeEl?.options[typeEl.selectedIndex]?.text || alerts[i].label,
         title,
-        refNumber: newRef || undefined,
         detail: document.getElementById(`eDetail_${i}`)?.value.trim() || '',
         expiryDate,
         priority: calculatePriority(days),
