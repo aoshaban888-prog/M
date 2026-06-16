@@ -88,6 +88,27 @@ function formatNotifyAt(notifyAt) {
   return `${formatDate(date)} — ${time}`;
 }
 
+function showToast(msg, type = '') {
+  let container = document.getElementById('toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'toast-container';
+    container.className = 'toast-container';
+    document.body.appendChild(container);
+  }
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+function getDaysLabel(days) {
+  if (days === 0) return 'اليوم';
+  if (days === 1) return 'غداً';
+  return `${days} يوم`;
+}
+
 function playExpirySound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
