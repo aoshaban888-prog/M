@@ -834,7 +834,7 @@ function initSettings() {
       appSettings[key] = el.type === 'checkbox' ? el.checked : Number(el.value) || el.value;
     });
     saveSettings();
-    alert('تم حفظ الإعدادات بنجاح!');
+    showToast('تم حفظ الإعدادات بنجاح', 'success');
   });
 
   function downloadFile(content, fileName, type) {
