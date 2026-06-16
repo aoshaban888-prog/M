@@ -1013,7 +1013,7 @@ function initSettings() {
       <p class="sub">تاريخ التصدير: ${date} &nbsp;|&nbsp; إجمالي العناصر: ${alerts.length}</p>
       <table>
         <thead><tr>
-          <th>ملاحظة</th><th>النوع</th><th>العنوان</th><th>الوصف</th>
+          <th>النوع</th><th>العنوان</th><th>الوصف</th>
           <th>تاريخ الانتهاء</th><th>الأيام المتبقية</th><th>الأولوية</th><th>وقت التنبيه</th>
         </tr></thead>
         <tbody>${rows}</tbody>
