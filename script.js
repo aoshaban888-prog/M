@@ -1079,6 +1079,7 @@ async function main() {
 
   updateUrgentBadge();
   updateSidebarSummary();
+  populateTypeSelects();
 
   const pageId = document.body.id;
   if (pageId === 'page-dashboard') initDashboard();
