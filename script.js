@@ -350,16 +350,19 @@ function initAlerts() {
       const nMn = String(document.getElementById('notifyMinute')?.value || 0).padStart(2, '0');
       notifyAt = `${nd}T${nHr}:${nMn}`;
     }
+    const refNumber = document.getElementById('itemRef')?.value.trim();
     alerts.unshift({
       type: itemType?.value || 'records',
       label: itemType?.options[itemType.selectedIndex]?.text || 'سجل',
       title, detail, priority,
+      ...(refNumber && { refNumber }),
       status: days <= 2 ? 'مستعجل' : 'قريب',
       urgent: days <= appSettings.thresholdUrgent,
       time: `ينتهي ${formatDate(expiryDate)}`,
       expiryDate,
       ...(notifyAt && { notifyAt, notifyFired: false })
     });
+    const refEl = document.getElementById('itemRef'); if (refEl) refEl.value = '';
     saveAlerts();
     if (itemTitle) itemTitle.value = '';
     if (itemDetail) itemDetail.value = '';
@@ -716,16 +719,19 @@ function initManage() {
       const nMn = String(document.getElementById('notifyMinute')?.value || 0).padStart(2, '0');
       notifyAt = `${nd}T${nHr}:${nMn}`;
     }
+    const refNumber = document.getElementById('itemRef')?.value.trim();
     alerts.unshift({
       type: itemType?.value || 'records',
       label: itemType?.options[itemType.selectedIndex]?.text || 'سجل',
       title, detail, priority,
+      ...(refNumber && { refNumber }),
       status: days <= 2 ? 'مستعجل' : 'قريب',
       urgent: days <= appSettings.thresholdUrgent,
       time: `ينتهي ${formatDate(expiryDate)}`,
       expiryDate,
       ...(notifyAt && { notifyAt, notifyFired: false })
     });
+    const refEl = document.getElementById('itemRef'); if (refEl) refEl.value = '';
     saveAlerts();
     if (itemTitle) itemTitle.value = '';
     if (itemDetail) itemDetail.value = '';
