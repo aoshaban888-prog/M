@@ -156,7 +156,7 @@ function buildAlertCard(item, index, showActions = false) {
         <span class="alert-tag" style="display:inline-flex;align-items:center;gap:5px;">${getTypeIcon(item.type)}${item.label}</span>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <span class="badge ${badgeClass}">${item.priority}</span>
-          <span class="days-pill ${pillClass}">${days} يوم</span>
+          <span class="days-pill ${pillClass}">${getDaysLabel(days)}</span>
         </div>
       </div>
       <strong style="font-size:0.97rem;">${item.title}</strong>
