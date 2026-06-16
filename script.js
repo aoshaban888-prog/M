@@ -25,7 +25,15 @@ const settingsKey = 'alerts-admin-settings';
 
 let alerts = [];
 
-const defaultSettings = { notifBrowser: true, notifSound: true, notifDaily: true, notifSms: false, thresholdUrgent: 7, thresholdWarning: 15, thresholdLow: 30 };
+const defaultSettings = {
+  notifBrowser: true, notifSound: true, notifDaily: true, notifSms: false,
+  thresholdUrgent: 7, thresholdWarning: 15, thresholdLow: 30,
+  categories: [
+    { type: 'records', label: 'سجل' },
+    { type: 'subscriptions', label: 'اشتراك' },
+    { type: 'residences', label: 'إقامة' }
+  ]
+};
 let appSettings = { ...defaultSettings };
 
 // ── Firestore save (also keeps localStorage as offline cache) ──
