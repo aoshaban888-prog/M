@@ -3,18 +3,21 @@ chcp 65001 >nul
 title Deploy Website to Firebase
 color 0A
 
-set "PATH=%PATH%;%APPDATA%\npm;%ProgramFiles%\nodejs;%ProgramFiles(x86)%\nodejs"
+set "FIREBASE_JS=%APPDATA%\npm\node_modules\firebase-tools\lib\bin\firebase.js"
+set "PATH=%PATH%;%ProgramFiles%\nodejs"
 
 echo.
 echo  === Step 1: Login with Google ===
-echo  Browser will open - choose your account
+echo  Browser will open - choose your Google account then come back here
 echo.
-node "%APPDATA%\npm\node_modules\firebase-tools\bin\firebase.js" login
+node "%FIREBASE_JS%" login
 echo.
 
 echo  === Step 2: Uploading website ===
 echo.
-node "%APPDATA%\npm\node_modules\firebase-tools\bin\firebase.js" deploy --only hosting --project aoshaban-59f07
+cd /d "c:\vccode\m"
+node "%FIREBASE_JS%" deploy --only hosting
 echo.
-echo  === Done! Copy the link above ===
+echo  === Done! Copy the Hosting URL above ===
+echo.
 pause
