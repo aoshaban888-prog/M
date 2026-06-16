@@ -83,7 +83,12 @@
           </select>
         </label>
         <label>العنوان
-          <input id="itemTitle" type="text" class="form-input" placeholder="مثال: سجل موظف جديد" />
+          <div style="display:flex;gap:6px;align-items:center;">
+            <input id="itemTitle" type="text" class="form-input" placeholder="مثال: سجل موظف جديد" style="flex:1;" />
+            <button type="button" class="ghost-btn" id="pasteTitle" title="لصق من الحافظة" style="padding:8px 10px;flex-shrink:0;">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+            </button>
+          </div>
         </label>
         <label><span>الوصف <span class="muted" style="font-size:0.8rem;">(اختياري)</span></span>
           <input id="itemDetail" type="text" class="form-input" placeholder="مثال: يحتاج تجديد خلال 3 أيام" />
