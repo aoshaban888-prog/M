@@ -829,6 +829,11 @@ function initManage() {
         saveAlerts();
         updateUrgentBadge();
         updateSidebarSummary();
+        logActivity('delete', alerts[i].title, `الفئة: ${alerts[i].label}`);
+        alerts.splice(i, 1);
+        saveAlerts();
+        updateUrgentBadge();
+        updateSidebarSummary();
         renderManageList();
         showToast('تم حذف العنصر', 'warning');
       }
