@@ -881,6 +881,7 @@ function initSettings() {
     a.download = `alerts-backup-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
+    showToast('تم تصدير ملف Excel', 'success');
   });
 
   document.getElementById('exportPdfBtn')?.addEventListener('click', () => {
