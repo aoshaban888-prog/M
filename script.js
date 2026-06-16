@@ -499,7 +499,7 @@ function initAlerts() {
     saveAlerts();
     if (itemTitle) itemTitle.value = '';
     if (itemDetail) itemDetail.value = '';
-    clearDateTrio('itemDate');
+    if (itemDate) itemDate.value = '';
     if (itemDays) itemDays.value = '3';
     if (addAlertForm) addAlertForm.style.display = 'none';
     updateUrgentBadge();
