@@ -514,7 +514,7 @@ function initAlerts() {
     overlay.innerHTML = `
       <div style="background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;width:360px;max-width:94vw;box-shadow:0 8px 40px rgba(0,0,0,0.4);">
         <p style="font-weight:700;margin-bottom:6px;font-size:1rem;">لصق من Excel أو أي مصدر</p>
-        <p style="color:var(--muted);font-size:0.83rem;margin-bottom:12px;">الصق (Ctrl+V) هنا — إذا كان صفاً من Excel سيتوزع تلقائياً:<br><span style="opacity:.7;">العمود 1 → العنوان &nbsp;|&nbsp; العمود 2 → الوصف &nbsp;|&nbsp; العمود 3 → التاريخ</span></p>
+        <p style="color:var(--muted);font-size:0.83rem;margin-bottom:12px;">الصق (Ctrl+V) هنا — إذا كان صفاً من Excel سيتوزع تلقائياً</p>
         <textarea id="_spArea" style="width:100%;height:80px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:9px;font-family:inherit;resize:none;box-sizing:border-box;font-size:0.95rem;" placeholder="الصق هنا..."></textarea>
         <div style="display:flex;gap:8px;margin-top:12px;">
           <button class="primary-btn" id="_spOk" style="flex:1;">تأكيد</button>
@@ -976,7 +976,7 @@ function initManage() {
     overlay.innerHTML = `
       <div style="background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px;width:360px;max-width:94vw;box-shadow:0 8px 40px rgba(0,0,0,0.4);">
         <p style="font-weight:700;margin-bottom:6px;font-size:1rem;">لصق من Excel أو أي مصدر</p>
-        <p style="color:var(--muted);font-size:0.83rem;margin-bottom:12px;">الصق (Ctrl+V) هنا — إذا كان صفاً من Excel سيتوزع تلقائياً:<br><span style="opacity:.7;">العمود 1 → العنوان &nbsp;|&nbsp; العمود 2 → الوصف &nbsp;|&nbsp; العمود 3 → التاريخ</span></p>
+        <p style="color:var(--muted);font-size:0.83rem;margin-bottom:12px;">الصق (Ctrl+V) هنا — إذا كان صفاً من Excel سيتوزع تلقائياً</p>
         <textarea id="_spArea" style="width:100%;height:80px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:9px;font-family:inherit;resize:none;box-sizing:border-box;font-size:0.95rem;" placeholder="الصق هنا..."></textarea>
         <div style="display:flex;gap:8px;margin-top:12px;">
           <button class="primary-btn" id="_spOk" style="flex:1;">تأكيد</button>
