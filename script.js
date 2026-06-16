@@ -117,6 +117,26 @@ function getDaysLabel(days) {
   return `${days} يوم`;
 }
 
+function getCategories() {
+  return appSettings.categories?.length ? appSettings.categories : defaultSettings.categories;
+}
+
+function populateTypeSelects() {
+  const cats = getCategories();
+  const opts = cats.map(c => `<option value="${c.type}">${c.label}</option>`).join('');
+  document.querySelectorAll('select#itemType').forEach(sel => {
+    const cur = sel.value;
+    sel.innerHTML = opts;
+    if (cats.some(c => c.type === cur)) sel.value = cur;
+  });
+  const chips = document.getElementById('manageFilterChips');
+  if (chips) {
+    const active = chips.querySelector('.chip.active')?.dataset?.mfilter || 'all';
+    chips.innerHTML = `<button class="chip${active==='all'?' active':''}" data-mfilter="all">الكل</button>` +
+      cats.map(c => `<button class="chip${active===c.type?' active':''}" data-mfilter="${c.type}">${c.label}</button>`).join('');
+  }
+}
+
 function playExpirySound() {
   try {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
