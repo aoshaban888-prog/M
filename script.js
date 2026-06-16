@@ -817,6 +817,41 @@ function initSettings() {
   });
 
 
+  document.getElementById('exportDataBtn')?.addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify({ alerts, settings: appSettings }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alerts-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('exportCsvBtn')?.addEventListener('click', () => {
+    const headers = ['الرقم المرجعي','النوع','العنوان','الوصف','تاريخ الانتهاء','الأيام المتبقية','الأولوية','الحالة','وقت التنبيه'];
+    const rows = alerts.map(item => [
+      item.refNumber || '',
+      item.label || '',
+      item.title || '',
+      item.detail || '',
+      item.expiryDate || '',
+      getRemainingDays(item),
+      item.priority || '',
+      item.status || '',
+      item.notifyAt || ''
+    ]);
+    const csv = [headers, ...rows]
+      .map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alerts-backup-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
   document.getElementById('importFile')?.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
