@@ -1,26 +1,20 @@
 @echo off
+chcp 65001 >nul
 title Deploy Website to Firebase
 color 0A
+
+set "PATH=%PATH%;%APPDATA%\npm;%ProgramFiles%\nodejs;%ProgramFiles(x86)%\nodejs"
+
 echo.
-echo  ========================================
-echo   رفع الموقع على الإنترنت
-echo  ========================================
+echo  === Step 1: Login with Google ===
+echo  Browser will open - choose your account
+echo.
+node "%APPDATA%\npm\node_modules\firebase-tools\bin\firebase.js" login
 echo.
 
-set PATH=%PATH%;%APPDATA%\npm;%ProgramFiles%\nodejs
-
-echo  الخطوة 1: تسجيل الدخول بحساب Google...
-echo  سيفتح المتصفح - اختر حسابك ثم عد هنا
+echo  === Step 2: Uploading website ===
 echo.
-firebase login
+node "%APPDATA%\npm\node_modules\firebase-tools\bin\firebase.js" deploy --only hosting --project aoshaban-59f07
 echo.
-
-echo  الخطوة 2: جارٍ رفع الموقع...
-echo.
-cd /d "c:\vccode\m"
-firebase deploy --only hosting
-echo.
-echo  ========================================
-echo   تم! انسخ الرابط اعلاه وشاركه
-echo  ========================================
+echo  === Done! Copy the link above ===
 pause
