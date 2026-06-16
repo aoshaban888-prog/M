@@ -852,6 +852,51 @@ function initSettings() {
     URL.revokeObjectURL(url);
   });
 
+  document.getElementById('exportPdfBtn')?.addEventListener('click', () => {
+    const date = new Date().toLocaleDateString('ar-EG');
+    const rows = alerts.map(item => {
+      const days = getRemainingDays(item);
+      const color = days <= 7 ? '#e53935' : days <= 30 ? '#f59e0b' : '#22c55e';
+      return `<tr>
+        <td>${item.refNumber || '—'}</td>
+        <td>${item.label || ''}</td>
+        <td>${item.title || ''}</td>
+        <td>${item.detail || '—'}</td>
+        <td>${item.expiryDate || '—'}</td>
+        <td style="color:${color};font-weight:700;">${days} يوم</td>
+        <td>${item.priority || ''}</td>
+        <td>${item.notifyAt || '—'}</td>
+      </tr>`;
+    }).join('');
+    const html = `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"/>
+      <style>
+        body{font-family:'Tajawal',Arial,sans-serif;direction:rtl;padding:24px;color:#1a1a2e;font-size:13px;}
+        h2{margin-bottom:4px;font-size:18px;}
+        .sub{color:#666;margin-bottom:16px;font-size:12px;}
+        table{width:100%;border-collapse:collapse;}
+        th{background:#1e3a5f;color:#fff;padding:8px 10px;text-align:right;font-size:12px;}
+        td{border-bottom:1px solid #e0e0e0;padding:7px 10px;}
+        tr:nth-child(even) td{background:#f7f9fc;}
+        @media print{body{padding:0}}
+      </style></head><body>
+      <h2>تقرير التنبيهات — نظام التنبيهات</h2>
+      <p class="sub">تاريخ التصدير: ${date} &nbsp;|&nbsp; إجمالي العناصر: ${alerts.length}</p>
+      <table>
+        <thead><tr>
+          <th>الرقم المرجعي</th><th>النوع</th><th>العنوان</th><th>الوصف</th>
+          <th>تاريخ الانتهاء</th><th>الأيام المتبقية</th><th>الأولوية</th><th>وقت التنبيه</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      </body></html>`;
+    const w = window.open('', '_blank', 'width=1000,height=700');
+    if (!w) { alert('يرجى السماح بفتح نافذة جديدة'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    setTimeout(() => w.print(), 400);
+  });
+
   document.getElementById('importFile')?.addEventListener('change', e => {
     const file = e.target.files[0];
     if (!file) return;
