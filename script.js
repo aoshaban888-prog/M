@@ -734,6 +734,7 @@ function initManage() {
       updateSidebarSummary();
       renderManageList();
       showToast('تم تجديد العنصر بنجاح', 'success');
+      logActivity('renew', alerts[i].title, `تاريخ الانتهاء الجديد: ${alerts[i].expiryDate}`);
     }
     if (cancelBtn) renderManageList();
 
