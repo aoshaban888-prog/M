@@ -264,10 +264,13 @@ function startClock() {
 
   function tick() {
     const now = new Date();
-    const hh = String(now.getHours()).padStart(2, '0');
+    const h24 = now.getHours();
+    const ampm = h24 < 12 ? 'ص' : 'م';
+    const h12 = h24 % 12 || 12;
+    const hh = String(h12).padStart(2, '0');
     const mm = String(now.getMinutes()).padStart(2, '0');
     const ss = String(now.getSeconds()).padStart(2, '0');
-    timeEl.textContent = `${hh}:${mm}:${ss}`;
+    timeEl.textContent = `${ampm} ${hh}:${mm}:${ss}`;
     if (dayEl) dayEl.textContent = now.toLocaleDateString('ar-EG', { weekday: 'long' });
     if (gregEl) gregEl.textContent = now.toLocaleDateString('ar-EG', { day: 'numeric', month: 'long', year: 'numeric' });
     if (hijriEl) {
